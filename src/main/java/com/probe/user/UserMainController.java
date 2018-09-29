@@ -5,11 +5,14 @@ import java.util.List;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UserMainController {
@@ -23,7 +26,8 @@ public class UserMainController {
 	}
 	
 	@RequestMapping("/userMain/searchAddressBySiDoNm")
-	public String searchAddressBySiDoNm(@RequestBody String body, Model model) {
+	@ResponseBody
+	public List<UserMainVo> searchAddressBySiDoNm(@RequestBody String body, Model model) {
 		JSONParser parser = new JSONParser();
 		String siDoNm = "";
 		try {
@@ -34,8 +38,7 @@ public class UserMainController {
 			e.printStackTrace();
 		}
 		List<UserMainVo> retList = userMainService.searchAddressBySiDoNm(siDoNm);
-		model.addAttribute("result", retList);
 		
-		return "/user/userMain";
+		return retList; 
 	}
 }

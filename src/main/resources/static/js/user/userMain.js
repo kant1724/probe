@@ -14,7 +14,7 @@ function ajax(url, input_data, gubun, method) {
         dataType: 'json',
         processData: false,
         success: function (data, status, xhr) {
-            if (gubun == "searchAddressBySiDoNm") {
+        	if (gubun == "searchAddressBySiDoNm") {
             	searchAddressBySiDoNmCallback(data);
 			}
         },
