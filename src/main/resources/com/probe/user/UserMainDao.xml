@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.probe.user.UserMainDao">
+
+    <select id="selectAddressBySiDoNm" resultType="com.probe.user.UserMainVo">
+        SELECT SI_GUN_GU_NM AS siGunGuNm
+          FROM TB_LC001
+         WHERE SI_DO_NM = #{siDoNm}
+         GROUP BY SI_GUN_GU_NM
+    </select>
+
+    <select id="selectAllAddress" resultType="com.probe.user.UserMainVo">
+        SELECT ID
+             , NAME
+             , COUNTRY
+             , POPULATION
+          FROM CITY
+    </select>
+
+    <insert id="insert">
+      INSERT INTO CITY (NAME, COUNTRY, POPULATION)
+      VALUES (#{name}, #{country}, #{population})
+    </insert>
+
+</mapper>
