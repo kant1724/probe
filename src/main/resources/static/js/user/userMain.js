@@ -33,5 +33,5 @@ function searchAddressBySiDoNm(siDoNm) {
 }
 
 function searchAddressBySiDoNmCallback(data) {
-	alert(data);
+	alert(data[0]['siGunGuNm']);	
 }
