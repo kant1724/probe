@@ -18,6 +18,7 @@ public class CMComnController {
 		model.addAttribute("name", "SpringBlog from Millky");
 		return "cm/cmMain";
 	}
+	
 	@RequestMapping("/cmNav")
 	public String loadNav(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
 		model.addAttribute("name", "SpringBlog from Millky");
@@ -28,6 +29,12 @@ public class CMComnController {
 		model.addAttribute("name", "SpringBlog from Millky");
 		return "cm/cmWelcome";
 	}
-	
+
+	@RequestMapping("/cmTopBar")
+	public String cmTopBar(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+		model.addAttribute("name", "SpringBlog from Millky");
+		return "cm/cmTopBar";
+	}
+
 
 }
