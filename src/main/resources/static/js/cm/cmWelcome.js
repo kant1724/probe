@@ -15,3 +15,4 @@ $("#cmCusSet").click(function(){
 	//goPage("ptWelcome");
 	gf_setLocInputer();
 });
+
