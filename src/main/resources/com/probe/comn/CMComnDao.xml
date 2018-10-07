@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.probe.comn.CMComnDao">
+
+    <select id="fnGetLocCdnmList" resultType="java.util.HashMap">
+		SELECT A.CODE,A.CODE_NM, A.DEPTH, A.GR_CODE
+		     , IF ( A.DEPTH >= 1, SUBSTR(A.CODE, 1, 2), '') AS DP1_CODE
+		     , SI_DO_NM AS DP1_CDNM
+		     , IF ( A.DEPTH >= 2, SUBSTR(A.CODE, 1, 5), '') AS DP2_CODE
+		     , SI_GUN_GU_NM AS DP2_CDNM
+		     , IF ( A.DEPTH >= 3, SUBSTR(A.CODE, 1, 8), '') AS DP3_CODE
+		     , LEGAL_UEP_MYUN_DONG_NM AS DP3_CDNM
+		  FROM TB_AD003 a
+		 WHERE 1 = 1
+		   AND A.DEPTH IN ( 1, 2, 3 )
+		   AND A.GR_CODE = IFNULL(#{grCode}, '')
+    </select>
+</mapper>

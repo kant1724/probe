@@ -1,0 +1,39 @@
+<meta charset="UTF-8">
+
+<div class="jumbotron">
+  <h1 class="display-4" id="lblJumboMain">나는 원해요</h1>
+  <p class="lead" id >조건입력.</p>
+  <hr class="my-4">
+</div>
+
+<div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-outline-primary btnDealStep" id="btnDealStep1" data-step="1">구분</button>
+  <button type="button" class="btn btn-outline-primary btnDealStep" id="btnDealStep2" data-step="2">방식</button>
+  <button type="button" class="btn btn-outline-primary btnDealStep" id="btnDealStep3" data-step="3">물건</button>
+  <button type="button" class="btn btn-outline-primary btnDealStep" id="btnDealStep4" data-step="4">지역</button>
+  <button type="button" class="btn btn-outline-primary btnDealStep" id="btnDealStep5" data-step="5">금액</button>
+  <button type="button" class="btn btn-outline-primary btnDealStep" id="btnDealStep6" data-step="6">의견</button>
+</div>
+<button type="button" class="btn btn-success btn-block" id="btnOkNext" >OK Next</button>
+<br>
+<div class="container">
+  <div class="row" id="divDealMain" name="divDealMain">
+            Loading...
+  </div>
+  
+</div>
+
+<div>
+문제
+</div>
+
+<script src="../js/dl/dlMain.js"></script>
+
+<input id="txtDlStep1ParamBefore" type="text" th:value='${dlValStep1}'>
+<input type="text" class="form-control" id="txtDlStep1Param" name="txtDlStep1Param"></input>
+<input type="text" class="form-control" id="txtDlStep2Param" name="txtDlStep2Param"></input>
+<input type="text" class="form-control" id="txtDlStep3Param" name="txtDlStep3Param"></input>
+<input type="text" class="form-control" id="txtDlStep4Param" name="txtDlStep4Param"></input>
+<input type="text" class="form-control" id="txtDlStep5Param" name="txtDlStep5Param"></input>
+<input type="text" class="form-control" id="txtDlStep6Param" name="txtDlStep6Param"></input>
+<input type="text" class="form-control" id="txtStep" name="txtStep"></input>

@@ -3,6 +3,11 @@
  */
 function goPage(pUrl) {
 	$("#div120").load(pUrl);
+
+	if ( $("#navbarTogglerDemo03").css("display") !== "none" ) {
+		$(".navbar-toggler").trigger("click");
+	}
+
 	console.log(pUrl);
 }
 
