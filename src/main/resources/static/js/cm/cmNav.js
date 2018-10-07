@@ -17,3 +17,11 @@ $("#cmHome").click(function(){
 $("#dlStep1").click(function(){
 	goPage("dlStep1");
 });
+
+$("#dlMain_9").click(function(){
+	goPage("dlMain?meth=9");
+});
+
+$("#dlMain_8").click(function(){
+	goPage("dlMain?meth=8");
+});
