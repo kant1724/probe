@@ -26,5 +26,6 @@ function ajax(url, input_data, gubun, method) {
 }
 
 function goApply() {
-	$(location).attr('href', '/partnerStepOne')
+	var url = '/partnerStepOne' + '?name=1'
+	$(location).attr('href', url)
 }
