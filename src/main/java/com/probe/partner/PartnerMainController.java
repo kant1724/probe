@@ -8,8 +8,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class PartnerMainController {
 	@RequestMapping("/partnerMain")
-	public String index(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+	public String partnerMain(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
 		return "partner/partnerMain";
+	}
+	
+	@RequestMapping("/partnerStepOne")
+	public String partnerStepOne(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+		return "partner/partnerStepOne";
+	}
+	
+	@RequestMapping("/partnerStepTwo")
+	public String partnerStepTwo(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+		return "partner/partnerStepTwo";
 	}
 	
 }
