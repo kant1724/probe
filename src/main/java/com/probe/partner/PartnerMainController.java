@@ -1,7 +1,5 @@
 package com.probe.partner;
 
-import java.util.Map;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +14,8 @@ public class PartnerMainController {
 	}
 	
 	@RequestMapping(value = "/partnerStepOne", method = RequestMethod.GET)
-	public String partnerStepOne(@RequestParam("name") String name, Map<String, Object> model) {
-		model.put("name", name);
+	public String partnerStepOne(@RequestParam("name") String name, Model model) {
+		model.addAttribute("name", name);
 	
 		return "partner/partnerStepOne";
 	}
