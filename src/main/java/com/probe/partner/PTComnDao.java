@@ -1,4 +1,4 @@
-package com.probe.part;
+package com.probe.partner;
 
 public class PTComnDao {
 
