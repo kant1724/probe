@@ -7,7 +7,7 @@ $( document ).ready(function() {
 });
 
 $("#ptIncome").click(function(){
-	goPage("ptWelcome");
+	goPage("partnerMain");
 });
 
 $("#cmHome").click(function(){
