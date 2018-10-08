@@ -1,14 +1,13 @@
 /*
  * 프로젝트 전반에 공통으로 쓰이는 스크립트
+ * data : 파라미터 
  */
-function goPage(pUrl) {
-	$("#div120").load(pUrl);
-
+function goPage(pUrl, data, complete) {
 	if ( $("#navbarTogglerDemo03").css("display") !== "none" ) {
 		$(".navbar-toggler").trigger("click");
-	}
+	} // 사이드메뉴 집어넣기
 
-	console.log(pUrl);
+	$("#div120").load(pUrl, data, complete);
 }
 
 /* 공통 ajax 발송 ks20181007 */
@@ -53,6 +52,18 @@ function gf_setLocInputer(pDepth, pGrCode, pCode) {
 }
 
 
+function gf_nvl(pStr, pIfNullStr) {
+	return gf_isEmpty(pStr)? pIfNullStr : pStr;
+}
+
+function gf_isEmpty(str) {
+	str += ""; // 문자로변환
+    if ( typeof str == 'undefined' || !str || str.length === 0 || str === "" || !/[^\s]/.test(str) || /^\s*$/.test(str) || str.replace(/\s/g,"") === "" ) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 
 function Josa(txt, josa) {
@@ -71,12 +82,10 @@ function Josa(txt, josa) {
 }
 Josa.get = function (josa, jong) {
 	// jong : true면 받침있음, false면 받침없음
-
 	if (josa == '을' || josa == '를') return (jong?'을':'를');
 	if (josa == '이' || josa == '가') return (jong?'이':'가');
 	if (josa == '은' || josa == '는') return (jong?'은':'는');
 	if (josa == '와' || josa == '과') return (jong?'와':'과');
-
 	// 알 수 없는 조사
 	return '**';
 }

@@ -1,19 +1,21 @@
 <meta charset="UTF-8">
 
 <div class="jumbotron">
-  <h1 class="display-4" id="lblJumboMain">나는 원해요</h1>
-  <p class="lead" id >조건입력.</p>
+  <h1 class="display-6" id="lblJumboMain">나는 원해요</h1>
+  <p class="lead">조건입력.</p>
   <hr class="my-4">
 </div>
 
-<div class="btn-group" role="group" aria-label="Basic example">
-  <button type="button" class="btn btn-outline-primary btnDealStep" id="btnDealStep1" data-step="1">구분</button>
-  <button type="button" class="btn btn-outline-primary btnDealStep" id="btnDealStep2" data-step="2">방식</button>
-  <button type="button" class="btn btn-outline-primary btnDealStep" id="btnDealStep3" data-step="3">물건</button>
-  <button type="button" class="btn btn-outline-primary btnDealStep" id="btnDealStep4" data-step="4">지역</button>
-  <button type="button" class="btn btn-outline-primary btnDealStep" id="btnDealStep5" data-step="5">금액</button>
-  <button type="button" class="btn btn-outline-primary btnDealStep" id="btnDealStep6" data-step="6">의견</button>
-</div>
+
+<ul class="nav nav-tabs justify-content-center">
+  <li class="nav-item"><a id="tabDealStep1" class="nav-link active" href="#" data-step="1">구분</a></li>
+  <li class="nav-item"><a id="tabDealStep2" class="nav-link" href="#" data-step="2">방식</a></li>
+  <li class="nav-item"><a id="tabDealStep3" class="nav-link" href="#" data-step="3">물건</a></li>
+  <li class="nav-item"><a id="tabDealStep4" class="nav-link" href="#" data-step="4">지역</a></li>
+  <li class="nav-item"><a id="tabDealStep5" class="nav-link" href="#" data-step="5">금액</a></li>
+  <li class="nav-item"><a id="tabDealStep6" class="nav-link" href="#" data-step="6">의견</a></li>
+</ul>
+
 <button type="button" class="btn btn-success btn-block" id="btnOkNext" >OK Next</button>
 <br>
 <div class="container">
@@ -29,11 +31,19 @@
 
 <script src="../js/dl/dlMain.js"></script>
 
-<input id="txtDlStep1ParamBefore" type="text" th:value='${dlValStep1}'>
-<input type="text" class="form-control" id="txtDlStep1Param" name="txtDlStep1Param"></input>
-<input type="text" class="form-control" id="txtDlStep2Param" name="txtDlStep2Param"></input>
-<input type="text" class="form-control" id="txtDlStep3Param" name="txtDlStep3Param"></input>
-<input type="text" class="form-control" id="txtDlStep4Param" name="txtDlStep4Param"></input>
-<input type="text" class="form-control" id="txtDlStep5Param" name="txtDlStep5Param"></input>
-<input type="text" class="form-control" id="txtDlStep6Param" name="txtDlStep6Param"></input>
-<input type="text" class="form-control" id="txtStep" name="txtStep"></input>
+<input id="txtDlBeCode1" type="text" th:value='${dlValStep1}'>
+<input id="txtStep" type="text" class="form-control"></input>
+
+<input type="text" class="form-control" id="txtDlCode1" name="txtDlCode1" data-step="1"></input>
+<input type="text" class="form-control" id="txtDlCode2" name="txtDlCode2" data-step="2"></input>
+<input type="text" class="form-control" id="txtDlCode3" name="txtDlCode3" data-step="3"></input>
+<input type="text" class="form-control" id="txtDlCode4" name="txtDlCode4" data-step="4"></input>
+<input type="text" class="form-control" id="txtDlCode5" name="txtDlCode5" data-step="5"></input>
+<input type="text" class="form-control" id="txtDlCode6" name="txtDlCode6" data-step="6"></input>
+
+<input type="text" class="form-control" id="txtDlCdnm1" name="txtDlCdnm1"></input>
+<input type="text" class="form-control" id="txtDlCdnm2" name="txtDlCdnm2"></input>
+<input type="text" class="form-control" id="txtDlCdnm3" name="txtDlCdnm3"></input>
+<input type="text" class="form-control" id="txtDlCdnm4" name="txtDlCdnm4"></input>
+<input type="text" class="form-control" id="txtDlCdnm5" name="txtDlCdnm5"></input>
+<input type="text" class="form-control" id="txtDlCdnm6" name="txtDlCdnm6"></input>

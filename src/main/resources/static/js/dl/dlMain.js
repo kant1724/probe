@@ -1,25 +1,56 @@
 $(document).ready(function() {
-	$("#txtDlStep1Param").val(fn_getCodeNm(1 ,$("#txtDlStep1ParamBefore").val()));
-	if ( $("#txtDlStep1Param").val() != "" ) $("#txtStep").val("2");
 
-	fn_setStep(fn_getStep());
+	fn_setStep(1);
+	fn_onStep(1);
+
+	var vBeforeParam = fn_getCodeNm(1 ,$("#txtDlBeCode1").val());
+	if ( !gf_isEmpty(vBeforeParam) ) {
+		$("#txtDlCdnm1").val(vBeforeParam);
+		$("input[id^='chkDealMain_'][data-code='" + $("#txtDlBeCode1").val() +"']").attr('checked', true);
+		fn_goStep(2);
+	}
 });
 
 $("#btnOkNext").click(function(){
-	fn_setStep(Number(fn_getStep())+1); 
+	var vStep = fn_getStep();
+	var vNextStep = vStep + 1;
+	fn_goStep(vNextStep);
+	
 });
 
-$(".btnDealStep").click(function(){
+$(".nav-item a").on("click", function () {
 	var vStep = $(this).attr("data-step");
-	fn_setStep(vStep);
-});
+	fn_goStep(vStep);
+})
+
+
+function fn_onClickDealMain(obj) {
+	var vStep = $(obj).attr("data-step");
+	var vCode = $(obj).attr("data-code");
+	$("#txtDlCdnm" + vStep).val(fn_getCodeNm(vStep, vCode));
+
+	fn_setCheckListStr();
+	fn_makeMents();
+
+	if ( vStep == 1 ) fn_goStep(2);
+}
+
+function fn_getStep() {	return gf_isEmpty($("#txtStep").val())? 1 : Number($("#txtStep").val()); }
 
 function fn_setStep(pStep) {
-	fn_makeMents();
 	$("#txtStep").val(pStep);
+}
 
-	$(".btnDealStep").removeClass("active");
-	$("#btnDealStep" + pStep).button('toggle');
+function fn_goStep(pStep) {
+	fn_outStep();
+	fn_onStep(pStep);
+}
+
+function fn_onStep(pStep) {
+	//fn_canIgoToStep(pStep);
+	
+	$("#txtStep").val(pStep);
+	$("#tabDealStep" + pStep).tab("show");
 
 	if ( pStep == "1" || pStep == "2" || pStep == "3" ) {
 		fn_setDealStep(gvStep[pStep]);
@@ -31,6 +62,62 @@ function fn_setStep(pStep) {
 	
 }
 
+function fn_outStep() {
+	var vStep = fn_getStep();
+	// 파라미터
+	fn_setCheckListStr();
+	
+	// 점보트론
+	fn_makeMents();
+}
+
+function fn_setCheckListStr() {
+	var vStep = fn_getStep();
+	var aJsonArray = new Array();
+
+	$("input[id^='chkDealMain_']").each(function() { 
+		if ( $(this).prop("checked") ) {
+			var aJson = new Object();
+			aJson.code = $(this).attr("data-code");
+			aJson.cdnm = $(this).attr("data-cdnm");
+			aJsonArray.push(aJson);
+			//vStep = $(this).attr("data-step");
+		}
+	});
+	
+	if ( gf_isEmpty(vStep) ) return;
+
+	var vJson = new Object();
+	vJson.step = vStep;
+	vJson.data = aJsonArray;
+	
+	$("#txtDlCode" + vStep).val(JSON.stringify(vJson));
+
+	$("input[id^='txtDlCode']").each(function() { 
+        //console.log($(this).prop('id'));
+        //console.log($(this).prop('id') + ":"+ ($(this).attr("data-step")> vStep));
+		if ( $(this).attr("data-step") > vStep ) {
+			$(this).val("");
+		    //$("#tabDealStep" + $(this).attr("data-step")).addClass("disabled");
+		} else {
+		    //$("#tabDealStep" + $(this).attr("data-step")).removeClass("disabled");
+		}
+	});
+	
+	//console.log( JSON.stringify(vJson) );
+}
+
+function fn_canIgoToStep(pStep) {
+	var vNowStep = $("#txtStep").val();
+	var vGotoStep = pStep;
+
+	$("input[id^='txtDlCode']").each(function() { 
+		if ( gf_isEmpty($(this).val()) ) {
+			
+		} 
+	});
+}
+
 function fn_getCodeNm(pStep, pCode) {
 	var pData = gvStep[pStep];
 	var vRtn = pData.filter(function (pData) { return pData.CODE == pCode });
@@ -39,8 +126,8 @@ function fn_getCodeNm(pStep, pCode) {
 
 var gvStep = Array();
 gvStep[0] = [];
-gvStep[1] = [ {"CODE":8, "CODE_NM":"내놔요", "STEP":1}
-            , {"CODE":9, "CODE_NM":"구해요", "STEP":1} ];
+gvStep[1] = [ {"CODE":9, "CODE_NM":"구해요", "STEP":1}
+            , {"CODE":8, "CODE_NM":"내놔요", "STEP":1} ];
 
 gvStep[2] = [ {"CODE":1, "CODE_NM":"매매", "STEP":2}
             , {"CODE":2, "CODE_NM":"전세", "STEP":2}
@@ -60,65 +147,50 @@ function fn_setDealStep(pData) {
 	var vResult = "";
 	for ( var i = 0; i < pData.length; i++ ) {
 		vResult += "<div class='custom-control custom-checkbox dl_dealMain col-4 border' data-code='"+ pData[i].CODE +"' data-step='"+pData[i].STEP+"'>"; 
-		vResult += "<input type='checkbox' class='custom-control-input' id='customCheck_"+ pData[i].CODE +"'>";
-		vResult += "<label class='custom-control-label' for='customCheck_"+ pData[i].CODE +"'>"+pData[i].CODE_NM+"</label>";
+		vResult += "<input type='checkbox' class='custom-control-input' id='chkDealMain_"+ pData[i].CODE +"' data-cdnm='" + pData[i].CODE_NM + "' data-code='"+ pData[i].CODE +"' data-step='"+pData[i].STEP+"'>";
+		vResult += "<label class='custom-control-label' for='chkDealMain_"+ pData[i].CODE +"'>"+pData[i].CODE_NM+"</label>";
 		vResult += "</div>";
 	}
 	$("#divDealMain").html(vResult);
-	
-	$(".dl_dealMain").click(function() {
-		var vStep = $(this).attr("data-step");
-		var vCode = $(this).attr("data-code");
-		$("#txtDlStep" + vStep + "Param").val(fn_getCodeNm(vStep, vCode));
-		
-		console.log(vStep);
-		if ( vStep == 1 ) {
-			$("#btnOkNext").trigger("click");
-		}
-
-		fn_makeMents();
-		if ( vStep == 1 || vStep == 2 ) {
-			//fn_setDealStep(gvStep[vSTEP]);
-			//fn_setStep(vSTEP);
-		}
-	});
-	
+	$("input[id^='chkDealMain_']").unbind("click").bind("click", function() { fn_onClickDealMain(this); });
 }
 
-$("#cmCusGet").click(function(){
-	//goPage("ptWelcome");
-	gf_setLocInputer();
-});
+function fn_getJsonParam(pStep) {
+	var vStr  = "";
+	var vJson = new Object();
+	var vData = $("#txtDlCode" + pStep).val();
+	if ( gf_isEmpty(vData) ) return vStr;
 
-
-$("#cmCusSet").click(function(){
-	//goPage("ptWelcome");
-	gf_setLocInputer();
-});
-
-function fn_getStep() {
-	var vStep = $("#txtStep").val();
-	if ( vStep == "" ) vStep = 1;
-	return vStep;
+	try {
+		var vJson = JSON.parse(vData);
+		var vLen = vJson.data.length;
+		if ( vLen == 0 ) {
+		} else if ( vLen == 1 ) {
+			vStr = vJson.data[0].cdnm;
+		} else {
+			for ( var i = 0; i < vLen; i++ ) {
+				vStr += (i>0?", ":"") + vJson.data[i].cdnm;
+			}
+			//vStr = "(" + vStr + ")";
+		}
+	} catch(e) { }
+	return vStr;
 }
-
 
 function fn_makeMents() {
-	var vStep  = fn_getStep();
-	var vStep1 = $("#txtDlStep1Param").val();
-	var vStep2 = $("#txtDlStep2Param").val();
-	var vStep3 = $("#txtDlStep3Param").val();
-	var vStep4 = $("#txtDlStep4Param").val();
-	var vStep5 = $("#txtDlStep5Param").val();
-	var vStep6 = $("#txtDlStep6Param").val();
-
+	var vStep1 = fn_getJsonParam(1);
+	var vStep2 = fn_getJsonParam(2);
+	var vStep3 = fn_getJsonParam(3);
+	var vStep4 = fn_getJsonParam(4);
+	var vStep5 = fn_getJsonParam(5);
+	var vStep6 = fn_getJsonParam(6);
+	
 	var vMent = "나는 원해요.";
-	if ( vStep == 0 ) vMent = "나는 원해요.";
-	if ( vStep == 1 ) vMent = "나는 " + vStep1;
-	if ( vStep == 2 ) vMent = "나는 " + Josa(vStep2, "를") + " " + vStep1;
-	if ( vStep == 3 ) vMent = "나는 " + vStep2 + "로 " + Josa(vStep3, "를") + " " + vStep1;
-	if ( vStep == 4 ) vMent = "나는 " + vStep2 + "로 " + vStep4 + "지역의 "+ vStep3 + "를 "+ vStep1;
-	if ( vStep == 5 ) vMent = "나는 " + vStep2 + "로 " + vStep4 + "지역의 "+ vStep5 + "정도의 "+ vStep3 + "를 "+ vStep1;
+	if ( !gf_isEmpty(vStep1) ) vMent = "나는 " + vStep1;
+	if ( !gf_isEmpty(vStep2) ) vMent = "나는 " + Josa(vStep2, "를") + " " + vStep1;
+	if ( !gf_isEmpty(vStep3) ) vMent = "나는 " + vStep2 + "로 " + Josa(vStep3, "를") + " " + vStep1;
+	if ( !gf_isEmpty(vStep4) ) vMent = "나는 " + vStep2 + "로 " + vStep4 + "지역의 "+ vStep3 + "를 "+ vStep1;
+	if ( !gf_isEmpty(vStep5) ) vMent = "나는 " + vStep2 + "로 " + vStep4 + "지역의 "+ vStep5 + "정도의 "+ vStep3 + "를 "+ vStep1;
 
 	$("#lblJumboMain").text(vMent);
 	
@@ -144,50 +216,3 @@ function fn_makeMents() {
 */
 }
 
-
-/*
-var vSTEP = data[0].STEP;
-var vBreadcrumb = "";
-if ( vSTEP == 1 ) {
-	vBreadcrumb += "<li class='breadcrumb-item' data-step='0' data-code=''><a href='#'>지역</a></li>";
-	vBreadcrumb += "<li class='breadcrumb-item active'>선택</li>";
-	$("#txtSTEP1Code").val("");
-	$("#txtSTEP2Code").val("");
-	$("#txtSTEP3Code").val("");
-	$("#txtSTEP1Cdnm").val("");
-	$("#txtSTEP2Cdnm").val("");
-	$("#txtSTEP3Cdnm").val("");
-	
-} else if ( vSTEP == 2 ) {
-	vBreadcrumb += "<li class='breadcrumb-item' data-step='0' data-code=''><a href='#'>지역</a></li>";
-	vBreadcrumb += "<li class='breadcrumb-item' data-step='1' data-code='" + data[0].DP1_CODE + "''><a href='#'>" + data[0].DP1_CDNM + "</a></li>";
-	vBreadcrumb += "<li class='breadcrumb-item active'>선택</li>";
-	$("#txtSTEP1Code").val(data[0].DP1_CODE);
-	$("#txtSTEP2Code").val("");
-	$("#txtSTEP3Code").val("");
-	$("#txtSTEP1Cdnm").val(data[0].DP1_CDNM);
-	$("#txtSTEP2Cdnm").val("");
-	$("#txtSTEP3Cdnm").val("");
-
-} else if ( vSTEP == 3 ) {
-	vBreadcrumb += "<li class='breadcrumb-item' data-step='0' data-code=''><a href='#'>지역</a></li>";
-	vBreadcrumb += "<li class='breadcrumb-item' data-step='1' data-code='" + data[0].DP1_CODE + "''><a href='#'>" + data[0].DP1_CDNM + "</a></li>";
-	vBreadcrumb += "<li class='breadcrumb-item' data-step='2' data-code='" + data[0].DP2_CODE + "''><a href='#'>" + data[0].DP2_CDNM + "</a></li>";
-	vBreadcrumb += "<li class='breadcrumb-item active'>선택</li>";
-	$("#txtSTEP1Code").val(data[0].DP1_CODE);
-	$("#txtSTEP2Code").val(data[0].DP2_CODE);
-	$("#txtSTEP3Code").val("");
-	$("#txtSTEP1Cdnm").val(data[0].DP1_CDNM);
-	$("#txtSTEP2Cdnm").val(data[0].DP2_CDNM);
-	$("#txtSTEP3Cdnm").val("");
-}
-$("#navSelLoc").html(vBreadcrumb);
-
-$(".breadcrumb-item").click(function() {
-	var vSTEP = $(this).attr("data-step");
-	if ( vSTEP == 0 || vSTEP == 1 || vSTEP == 2 ) {
-		var vGrCode = $(this).attr("data-code");
-		fn_setLocInputer(vGrCode);
-	}
-})
-*/
