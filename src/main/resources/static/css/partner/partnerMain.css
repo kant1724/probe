@@ -1,17 +1,31 @@
-.header {
+.partnerMain-header {
+	position: relative;	
+	width: 100%;
+	height: 200px;
+	background: #EAEAEA;
+	font-size: 2em;
+}
+
+.partnerMain-header-text {
+	position: relative;	
+	left: 20px;
+	top: 20px;
+}
+
+.partnerMain-content {
 	position: relative;
 	width: 100%;
 	height: 200px;
 }
 
-.content {
+#apply {
 	position: relative;
-	width: 100%;
-	height: 200px;
+	top: 50px;
 }
 
-.description {
+.partnerMain-description {
 	position: relative;
 	width: 100%;
 	height: 200px;
+	background: #EAEAEA;
 }

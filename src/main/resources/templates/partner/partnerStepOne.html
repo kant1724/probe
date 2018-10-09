@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,10 +10,38 @@
 
 <body>
 	<div class="header">
-		<div id="stepOne"></div>
+		<div id="stepOne"><a id="stepOne-text">정보<br>입력</a></div>
+		<div id="stepTwo"><a id="stepTwo-text">본인<br>인증</a></div>
+		<div id="stepThree"><a id="stepThree-text">신청<br>등록</a></div>
+		<div id="stepFour"><a id="stepFour-text">등록<br>완료</a></div>
 	</div>
 	<div class="content">
-		<input id="name" type="text" th:value='${name}'>
+		<div><a>사업자번호</a><input id="irsNo" type="text" value=''></div>
+		<p>
+		<div><a>업체명</a><input id="partnerNm" type="text" value=''></div>
+		<p>
+		<div><a>대표명</a><input id="ceoNm" type="text" value=''></div>
+		<p>
+		<div><a>연락처</a><input id="telNo" type="text" value=''></div>
+		<p>
+		<div><a>사무실 주소</a><input id="address" type="text" value=''></div>
+		<p>
+		<div><a>신청자</a>
+			<div id="applicantType">
+			<div class="form-check form-check-inline">
+  				<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+  				<label class="form-check-label" for="inlineRadio1">대표본인</label>
+			</div>
+			<div class="form-check form-check-inline">
+  				<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+  				<label class="form-check-label" for="inlineRadio2">사무원</label>
+			</div>
+			</div>
+		</div>
+		<p>
+		<div><a>신청자명</a><input id="applicantNm" type="text" value=''></div>
+		<p>
+		<div><a>신청자 전화번호</a><input id="applicantTelNo" type="text" value=''></div>
 	</div>
 	<div class="footer">
 		<button id="register" type="button" class="btn btn-success">등록하기</button>
