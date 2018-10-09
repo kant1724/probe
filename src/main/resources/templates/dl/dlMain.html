@@ -6,30 +6,29 @@
   <hr class="my-4">
 </div>
 
-
-<ul class="nav nav-tabs justify-content-center">
-  <li class="nav-item"><a id="tabDealStep1" class="nav-link active" href="#" data-step="1">구분</a></li>
-  <li class="nav-item"><a id="tabDealStep2" class="nav-link" href="#" data-step="2">방식</a></li>
-  <li class="nav-item"><a id="tabDealStep3" class="nav-link" href="#" data-step="3">물건</a></li>
-  <li class="nav-item"><a id="tabDealStep4" class="nav-link" href="#" data-step="4">지역</a></li>
-  <li class="nav-item"><a id="tabDealStep5" class="nav-link" href="#" data-step="5">금액</a></li>
-  <li class="nav-item"><a id="tabDealStep6" class="nav-link" href="#" data-step="6">의견</a></li>
-</ul>
-
-<button type="button" class="btn btn-success btn-block" id="btnOkNext" >OK Next</button>
-<br>
 <div class="container">
-  <div class="row" id="divDealMain" name="divDealMain">
-            Loading...
-  </div>
-  
-</div>
 
-<div>
-문제
-</div>
-
-<script src="../js/dl/dlMain.js"></script>
+	<ul class="nav nav-tabs justify-content-center">
+	  <li class="nav-item"><a id="tabDealStep1" class="nav-link active" href="#" data-step="1">구분</a></li>
+	  <li class="nav-item"><a id="tabDealStep2" class="nav-link" href="#" data-step="2">방식</a></li>
+	  <li class="nav-item"><a id="tabDealStep3" class="nav-link" href="#" data-step="3">물건</a></li>
+	  <li class="nav-item"><a id="tabDealStep4" class="nav-link" href="#" data-step="4">지역</a></li>
+	  <li class="nav-item"><a id="tabDealStep5" class="nav-link" href="#" data-step="5">금액</a></li>
+	  <li class="nav-item"><a id="tabDealStep6" class="nav-link" href="#" data-step="6">의견</a></li>
+	</ul>
+	
+	<button type="button" class="btn btn-outline-primary btn-block" id="btnOkNext" >OK Next</button>
+	<br>
+	<div class="container">
+	  <div class="row" id="divDealMain" name="divDealMain">
+	            Loading...
+	  </div>
+	  
+	</div>
+	
+	<div>
+	문제
+	</div>
 
 <input id="txtDlBeCode1" type="text" th:value='${dlValStep1}'>
 <input id="txtStep" type="text" class="form-control"></input>
@@ -40,10 +39,6 @@
 <input type="text" class="form-control" id="txtDlCode4" name="txtDlCode4" data-step="4"></input>
 <input type="text" class="form-control" id="txtDlCode5" name="txtDlCode5" data-step="5"></input>
 <input type="text" class="form-control" id="txtDlCode6" name="txtDlCode6" data-step="6"></input>
-
-<input type="text" class="form-control" id="txtDlCdnm1" name="txtDlCdnm1"></input>
-<input type="text" class="form-control" id="txtDlCdnm2" name="txtDlCdnm2"></input>
-<input type="text" class="form-control" id="txtDlCdnm3" name="txtDlCdnm3"></input>
-<input type="text" class="form-control" id="txtDlCdnm4" name="txtDlCdnm4"></input>
-<input type="text" class="form-control" id="txtDlCdnm5" name="txtDlCdnm5"></input>
-<input type="text" class="form-control" id="txtDlCdnm6" name="txtDlCdnm6"></input>
+	
+</div>
+<script src="../js/dl/dlMain.js"></script>

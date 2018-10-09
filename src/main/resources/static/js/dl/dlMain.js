@@ -1,39 +1,30 @@
 $(document).ready(function() {
-
 	fn_setStep(1);
 	fn_onStep(1);
 
+	// 보통 구해요/팔아요...는 선택한 상태에서 본 레이어가 열린다. 파라미터 처리로 step 1 패스하는 로직
 	var vBeforeParam = fn_getCodeNm(1 ,$("#txtDlBeCode1").val());
 	if ( !gf_isEmpty(vBeforeParam) ) {
-		$("#txtDlCdnm1").val(vBeforeParam);
 		$("input[id^='chkDealMain_'][data-code='" + $("#txtDlBeCode1").val() +"']").attr('checked', true);
+		fn_saveStepParam();
 		fn_goStep(2);
 	}
 });
 
+var gvDealInfo = Array(); // TODO
+
+// 다음버튼 클릭
 $("#btnOkNext").click(function(){
 	var vStep = fn_getStep();
 	var vNextStep = vStep + 1;
 	fn_goStep(vNextStep);
-	
 });
 
+// 탭바 클릭
 $(".nav-item a").on("click", function () {
 	var vStep = $(this).attr("data-step");
 	fn_goStep(vStep);
 })
-
-
-function fn_onClickDealMain(obj) {
-	var vStep = $(obj).attr("data-step");
-	var vCode = $(obj).attr("data-code");
-	$("#txtDlCdnm" + vStep).val(fn_getCodeNm(vStep, vCode));
-
-	fn_setCheckListStr();
-	fn_makeMents();
-
-	if ( vStep == 1 ) fn_goStep(2);
-}
 
 function fn_getStep() {	return gf_isEmpty($("#txtStep").val())? 1 : Number($("#txtStep").val()); }
 
@@ -41,57 +32,94 @@ function fn_setStep(pStep) {
 	$("#txtStep").val(pStep);
 }
 
+// 스텝에서 빠져나갈수 있으면 다음 스텝 세팅
 function fn_goStep(pStep) {
+	if ( !fn_canIgoToStep(pStep) ) return;
 	fn_outStep();
 	fn_onStep(pStep);
 }
 
+// 스텝 종료 세팅
+function fn_outStep() {
+	var vStep = fn_getStep();
+	fn_saveStepParam(); // 스텝별 결과 세팅
+	fn_makeMents(); // 점보트론
+	return true;
+}
+
+// 스텝 진입 세팅
 function fn_onStep(pStep) {
-	//fn_canIgoToStep(pStep);
-	
+	pStep += "";
 	$("#txtStep").val(pStep);
 	$("#tabDealStep" + pStep).tab("show");
 
 	if ( pStep == "1" || pStep == "2" || pStep == "3" ) {
-		fn_setDealStep(gvStep[pStep]);
+		var vData = gvStep[pStep];
+		var vResult = "";
+		for ( var i = 0; i < vData.length; i++ ) {
+			vResult += "<div class='custom-control custom-checkbox dl_dealMain col-4 border' data-code='"+ vData[i].CODE +"' data-step='"+vData[i].STEP+"'>"; 
+			vResult += "<input type='checkbox' class='custom-control-input' id='chkDealMain_"+ vData[i].CODE +"' data-cdnm='" + vData[i].CODE_NM + "' data-code='"+ vData[i].CODE +"' data-step='"+vData[i].STEP+"'>";
+			vResult += "<label class='custom-control-label' for='chkDealMain_"+ vData[i].CODE +"'>"+vData[i].CODE_NM+"</label>";
+			vResult += "</div>";
+		}
+		$("#divDealMain").html(vResult);
+		$("input[id^='chkDealMain_']").unbind("click").bind("click", function() { fn_onClickDealMain(this); });
+
 	} else if ( pStep == "4" ) {
-		gf_setLocInputer();
+		
+		try {
+			// TODO
+		} catch(e) {
+		}
+		$("#divDealMain").html("");
+		gf_showLocInputer();
 	} else {
 		
 	}
-	
 }
 
-function fn_outStep() {
-	var vStep = fn_getStep();
-	// 파라미터
-	fn_setCheckListStr();
-	
-	// 점보트론
+function fn_onClickDealMain(obj) {
+	var vStep = $(obj).attr("data-step");
+
+	fn_saveStepParam();
 	fn_makeMents();
+
+	if ( vStep == 1 ) fn_goStep(2);
 }
 
-function fn_setCheckListStr() {
+function fn_saveStepParam() {
 	var vStep = fn_getStep();
-	var aJsonArray = new Array();
 
-	$("input[id^='chkDealMain_']").each(function() { 
-		if ( $(this).prop("checked") ) {
-			var aJson = new Object();
-			aJson.code = $(this).attr("data-code");
-			aJson.cdnm = $(this).attr("data-cdnm");
-			aJsonArray.push(aJson);
-			//vStep = $(this).attr("data-step");
-		}
-	});
+	if ( vStep == "1" || vStep == "2" || vStep == "3" ) {
+		var aJsonArray = new Array();
 	
-	if ( gf_isEmpty(vStep) ) return;
+		$("input[id^='chkDealMain_']").each(function() { 
+			if ( $(this).prop("checked") ) {
+				var aJson = new Object();
+				aJson.code = $(this).attr("data-code");
+				aJson.cdnm = $(this).attr("data-cdnm");
+				aJsonArray.push(aJson);
+				//vStep = $(this).attr("data-step");
+			}
+		});
+		
+		if ( gf_isEmpty(vStep) ) return;
+	
+		var vJson = new Object();
+		vJson.step = vStep;
+		vJson.data = aJsonArray;
+		
+		gvDealInfo[vStep] = vJson;
+		$("#txtDlCode" + vStep).val(JSON.stringify(vJson));
 
-	var vJson = new Object();
-	vJson.step = vStep;
-	vJson.data = aJsonArray;
-	
-	$("#txtDlCode" + vStep).val(JSON.stringify(vJson));
+	} else if ( vStep == "4" ) {
+		// TODO
+		//var vJson = new Object();
+		//vJson = $("#txtDlCode4").val()
+		
+		//gvDealInfo[vStep] = vJson;
+		//$("#txtDlCode" + vStep).val(JSON.stringify(vJson));
+	}
 
 	$("input[id^='txtDlCode']").each(function() { 
         //console.log($(this).prop('id'));
@@ -107,15 +135,43 @@ function fn_setCheckListStr() {
 	//console.log( JSON.stringify(vJson) );
 }
 
-function fn_canIgoToStep(pStep) {
-	var vNowStep = $("#txtStep").val();
-	var vGotoStep = pStep;
+function fn_showLocInputerCallback(pReturnValue) {
+	var vResult = "";
+	try {
+		if ( pReturnValue.depth1.length <= 0 ) return;
+		// var vJson = JSON.parse($("#txtDlCode4").val());
+		// pReturnValue 는 JSON 객체이다.
+		// 체크 후,
+		vResult = JSON.stringify(pReturnValue);
+	} catch(e) {}
+	
+	console.log("vResult : " + vResult);
 
-	$("input[id^='txtDlCode']").each(function() { 
-		if ( gf_isEmpty($(this).val()) ) {
-			
-		} 
-	});
+	var vJson = new Object();
+	vJson.step = 4;
+	vJson.data = pReturnValue;
+
+	if ( !gf_isEmpty(vResult) ) $("#txtDlCode4").val(JSON.stringify(vJson));
+	$("#divDealMain").html($("#txtDlCode4").val());
+}
+
+
+
+function fn_canIgoToStep(pStep) {
+	var vNowStep = fn_getStep();
+	var vGotoStep = Number(pStep);
+
+	if ( vGotoStep <= vNowStep ) return true;
+	
+	var vLength = 0; // 이전단계에 파라메터 세팅이 빈값이 아니어야함.
+	try {
+		var vJson = new Object();
+		vJson = JSON.parse($("#txtDlCode"+ (vGotoStep-1)).val());
+		vLength = vJson.data.length;
+	} catch(e) { }
+	if ( vLength == 0 ) return false;
+	
+	return true;
 }
 
 function fn_getCodeNm(pStep, pCode) {
@@ -142,18 +198,6 @@ gvStep[3] = [ {"CODE":1, "CODE_NM":"아파트"  , "STEP":3}
             , {"CODE":7, "CODE_NM":"쓰리룸"  , "STEP":3}
             , {"CODE":8, "CODE_NM":"빌딩"   , "STEP":3}
             , {"CODE":9, "CODE_NM":"토지"   , "STEP":3} ];
-
-function fn_setDealStep(pData) {
-	var vResult = "";
-	for ( var i = 0; i < pData.length; i++ ) {
-		vResult += "<div class='custom-control custom-checkbox dl_dealMain col-4 border' data-code='"+ pData[i].CODE +"' data-step='"+pData[i].STEP+"'>"; 
-		vResult += "<input type='checkbox' class='custom-control-input' id='chkDealMain_"+ pData[i].CODE +"' data-cdnm='" + pData[i].CODE_NM + "' data-code='"+ pData[i].CODE +"' data-step='"+pData[i].STEP+"'>";
-		vResult += "<label class='custom-control-label' for='chkDealMain_"+ pData[i].CODE +"'>"+pData[i].CODE_NM+"</label>";
-		vResult += "</div>";
-	}
-	$("#divDealMain").html(vResult);
-	$("input[id^='chkDealMain_']").unbind("click").bind("click", function() { fn_onClickDealMain(this); });
-}
 
 function fn_getJsonParam(pStep) {
 	var vStr  = "";

@@ -3,7 +3,8 @@
  * data : 파라미터 
  */
 function goPage(pUrl, data, complete) {
-	if ( $("#navbarTogglerDemo03").css("display") !== "none" ) {
+	if ( $("#navbarTogglerDemo03").css("display") == "block" 
+	  && $(".navbar-toggler").css("display") == "block"  ) {
 		$(".navbar-toggler").trigger("click");
 	} // 사이드메뉴 집어넣기
 
@@ -35,22 +36,35 @@ function gf_comnAjaxError(jqXhr, textStatus, errorMessage) {
 	}
 }
 
-function gf_setLocInputer(pDepth, pGrCode, pCode) {
-
+function gf_showLocInputer(pParamNow) {
+	// pParamNow 값이 있으면, 해당값 읽어서 편집모드
+	// else 신규등록모드
+	
 	$("#txtDepth1Code").val("");
 	$("#txtDepth2Code").val("");
 	$("#txtDepth3Code").val("");
-	$("#txtParamGrCode").val(pGrCode);
-	$("#txtParamDepth").val(pDepth);
-	$("#txtParamCode").val(pCode);
-	if($("#layLocInputer").css("display") == "none"){
+	$("#txtParamGrCode").val("");
+	$("#txtParamDepth").val("");
+	$("#txtParamCode").val("");
+	if($("#div300").css("display") == "none"){
 		$("#btnLocInputer").trigger("click");
 	}
 
-	$("#divLocMain").load( "cmLocInputer" );
-
+	$("#div300").load( "cmLocInputer" );
+	$('#div300').on('hidden.bs.modal', function (e) {
+		if ( typeof fn_showLocInputerCallback == "function" ) {
+			var vInRtn = $("#txtDepth3Code").val();
+			var vOutRtn = {};
+			
+			// gf_showLocInputer를 호출하는 각화면에서
+			// fn_setLocInputerCallback 를 만들어 리턴을 받으라.
+			try {
+				vOutRtn = JSON.parse(vInRtn);
+			} catch(e) { }
+			fn_showLocInputerCallback(vOutRtn);
+		} 
+	});
 }
-
 
 function gf_nvl(pStr, pIfNullStr) {
 	return gf_isEmpty(pStr)? pIfNullStr : pStr;

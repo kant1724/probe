@@ -8,51 +8,17 @@
 </head>
 
 <body>
-<button class="btn btn-default sr-only" data-target="#layLocInputer" data-toggle="modal" id="btnLocInputer" name="btnLocInputer"></button>
-<div name="div100" id="div100"></div>
-<div name="div200" id="div200"></div>
+<div class="container">
+	<button class="btn btn-default sr-only" data-target="#div300" data-toggle="modal" id="btnLocInputer"></button>
+	<div id="div100"></div>
+	<div id="div200"></div>
+	<div id="div300" class="modal fade">
+		<div class="modal-dialog">
+		</div>
+	</div>
 
-<div class="modal fade" id="layLocInputer" >
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <!-- header -->
-      <div class="modal-header">
-        <!-- header title -->
-        <h4 class="modal-title">지역선택</h4>
-        <!-- 닫기(x) 버튼 -->
-        <button type="button" class="close" data-dismiss="modal">×</button>
-      </div>
-      
-      <!-- body -->
-      <div class="modal-body" id="divLocMain">
-            Loading...
-      </div>
-      
-<input type="hidden" >
-<input type="text" class="form-control sr-only" id="validationTooltip01" placeholder="First name" value="Ma1rk">
 
-<input type="text" class="form-control" id="txtDepth1Code" name="txtDepth1Code"></input>
-<input type="text" class="form-control" id="txtDepth2Code" name="txtDepth2Code"></input>
-<input type="text" class="form-control" id="txtDepth3Code" name="txtDepth3Code"></input>
-<input type="text" class="form-control" id="txtDepth1Cdnm" name="txtDepth1Cdnm"></input>
-<input type="text" class="form-control" id="txtDepth2Cdnm" name="txtDepth2Cdnm"></input>
-<input type="text" class="form-control" id="txtDepth3Cdnm" name="txtDepth3Cdnm"></input>
-
-<input type="text" class="form-control" id="txtParamGrCode" value="" placeholder="txtParamGrCode">
-<input type="text" class="form-control" id="txtParamDepth" value="" placeholder="txtParamDepth">
-<input type="text" class="form-control" id="txtParamCode" value="" placeholder="txtParamCode">
-      
-      <!-- Footer -->
-      <div class="modal-footer">
-        Footer
-        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-      </div>
-    </div>
-  </div>
 </div>
-
-
-
 </body>
 
 <script src="../comn/jquery-3.3.1.js"></script>

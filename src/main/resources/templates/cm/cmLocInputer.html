@@ -1,15 +1,41 @@
 
-<meta charset="UTF-8">
-<script src="../js/cm/cmLocInputer.js"></script>
+	<meta charset="UTF-8">
+	<script src="../js/cm/cmLocInputer.js"></script>
+	
+	<div class="modal-content">
+		<div class="modal-header">
+			<h4 class="modal-title">지역선택</h4>
+			<button type="button" class="close" data-dismiss="modal">×</button>
+		</div>
+	
+		<div class="modal-body" id="divLocMain">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb" id="navSelLoc" name="navSelLoc"></ol>
+			</nav>
+			
+			<div class="container">
+				<div class="row" id="divSelButtons" name="divSelButtons">
+				Loading...
+				</div>
+			</div>
+		</div>
 
-<nav aria-label="breadcrumb">
-	<ol class="breadcrumb" id="navSelLoc" name="navSelLoc">
-	</ol>
-</nav>
+	    <div class="modal-footer">
+	      <button type="button" class="btn btn-primary" id="btnLocConfirm">확인</button>
+	      <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+	    </div>
+		<input type="hidden" >
+		<input type="text" class="form-control sr-only" id="validationTooltip01" placeholder="First name" value="Ma1rk">
+		
+		<input type="text" class="form-control" id="txtDepth1Code" name="txtDepth1Code"></input>
+		<input type="text" class="form-control" id="txtDepth2Code" name="txtDepth2Code"></input>
+		<input type="text" class="form-control" id="txtDepth3Code" name="txtDepth3Code"></input>
+		<input type="text" class="form-control" id="txtDepth1Cdnm" name="txtDepth1Cdnm"></input>
+		<input type="text" class="form-control" id="txtDepth2Cdnm" name="txtDepth2Cdnm"></input>
+		<input type="text" class="form-control" id="txtDepth3Cdnm" name="txtDepth3Cdnm"></input>
+		
+		<input type="text" class="form-control" id="txtParamGrCode" value="" placeholder="txtParamGrCode">
+		<input type="text" class="form-control" id="txtParamDepth" value="" placeholder="txtParamDepth">
+		<input type="text" class="form-control" id="txtParamCode" value="" placeholder="txtParamCode">
 
-<div class="container">
-  <div class="row" id="divSelButtons" name="divSelButtons">
-Loading...
-  </div>
-</div>
-<button type="button" class="btn btn-success btn-block" id="btnOkNext" >OK Next</button>
+	</div>
