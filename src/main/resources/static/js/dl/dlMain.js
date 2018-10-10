@@ -36,6 +36,7 @@ function fn_setStep(pStep) {
 function fn_goStep(pStep) {
 	if ( !fn_canIgoToStep(pStep) ) return;
 	fn_outStep();
+	if ( !fn_canIgoToStep(pStep) ) return;
 	fn_onStep(pStep);
 }
 
@@ -66,25 +67,74 @@ function fn_onStep(pStep) {
 		$("input[id^='chkDealMain_']").unbind("click").bind("click", function() { fn_onClickDealMain(this); });
 
 	} else if ( pStep == "4" ) {
-		
-		try {
-			// TODO
-		} catch(e) {
+		fn_step4Draw();
+		if ( fn_isDealInfoEmpty(4) ) { // 기등록건 없으면 화면 지우고 지역선택기 작동
+			gf_showLocInputer( null, function(pData) {
+				fn_step4JsonSaver(pData);
+				fn_step4Draw();
+			} );
+		} else { // 기등록건 그림
 		}
-		$("#divDealMain").html("");
-		gf_showLocInputer();
 	} else {
 		
 	}
 }
 
-function fn_onClickDealMain(obj) {
-	var vStep = $(obj).attr("data-step");
+function fn_step4Draw() {
+	$("#divDealMain").html("");
+	if ( fn_isDealInfoEmpty(4) ) return;
 
+	var vData = gvDealInfo[4].data;
+	var vResult = "";
+	for ( var i = 0; i < vData.length; i++ ) {
+		vResult += "<div class='card'><div class='card-header'>" + vData[i].depth1.cdnm + " " + vData[i].depth2.cdnm + "</div>";
+		vResult += "<div class='card-body'><p class='card-text'>";
+		for ( var j = 0; j < vData[i].depth3.length; j++ ) {
+			vResult += ((j==0)?"":", ") + vData[i].depth3[j].cdnm;
+		}
+		vResult += "</p></div></div>";
+	}
+	$("#divDealMain").html(vResult);
+}
+
+function fn_step4JsonSaver(pData) {
+	if ( gf_isEmpty(pData) ) return;
+
+	if ( fn_isDealInfoEmpty(4) ) {
+		var vJson = new Object();
+		var aJsonArray = new Array();
+		aJsonArray.push(pData);
+		vJson.step = 4;
+		vJson.data = aJsonArray;
+		gvDealInfo[4] = vJson;
+
+	} else {
+		var vEditTF = false;
+		for ( var i = 0; i < gvDealInfo[4].data.length; i++ ) { // 기선택된 구는 편집.
+			if ( gvDealInfo[4].data[i].depth1.code == pData.depth1.code
+		      && gvDealInfo[4].data[i].depth2.code == pData.depth2.code ) {
+				gvDealInfo[4].data[i].depth3 = pData.depth3;
+				vEditTF = true;
+				break;
+			}
+		}
+		if ( !vEditTF ) { // 기선택 없으면 푸시
+			gvDealInfo[4].data.push(pData);
+		}
+	}
+}
+
+function fn_isDealInfoEmpty(pStep) {
+	if ( gf_isEmpty(gvDealInfo[pStep]) ) return true;
+	if ( gvDealInfo[pStep].data.length == 0 ) return true;
+	return false;
+}
+
+function fn_onClickDealMain(obj) {
 	fn_saveStepParam();
 	fn_makeMents();
 
-	if ( vStep == 1 ) fn_goStep(2);
+	if ( fn_getStep() == 1 ) fn_goStep(2);
 }
 
 function fn_saveStepParam() {
@@ -102,23 +152,24 @@ function fn_saveStepParam() {
 				//vStep = $(this).attr("data-step");
 			}
 		});
-		
+
 		if ( gf_isEmpty(vStep) ) return;
-	
+
 		var vJson = new Object();
 		vJson.step = vStep;
 		vJson.data = aJsonArray;
-		
+
 		gvDealInfo[vStep] = vJson;
-		$("#txtDlCode" + vStep).val(JSON.stringify(vJson));
 
 	} else if ( vStep == "4" ) {
-		// TODO
-		//var vJson = new Object();
-		//vJson = $("#txtDlCode4").val()
-		
-		//gvDealInfo[vStep] = vJson;
-		//$("#txtDlCode" + vStep).val(JSON.stringify(vJson));
+		// 이미 세이브되어있어.
+	}
+	
+	// TODO 지우기
+	for ( var i = 0; i < gvDealInfo.length; i++ ) {
+		if ( i > vStep ) {
+			gvDealInfo[i] = null;
+		}
 	}
 
 	$("input[id^='txtDlCode']").each(function() { 
@@ -132,45 +183,22 @@ function fn_saveStepParam() {
 		}
 	});
 	
-	//console.log( JSON.stringify(vJson) );
+
+	console.log(gvDealInfo);
 }
-
-function fn_showLocInputerCallback(pReturnValue) {
-	var vResult = "";
-	try {
-		if ( pReturnValue.depth1.length <= 0 ) return;
-		// var vJson = JSON.parse($("#txtDlCode4").val());
-		// pReturnValue 는 JSON 객체이다.
-		// 체크 후,
-		vResult = JSON.stringify(pReturnValue);
-	} catch(e) {}
-	
-	console.log("vResult : " + vResult);
-
-	var vJson = new Object();
-	vJson.step = 4;
-	vJson.data = pReturnValue;
-
-	if ( !gf_isEmpty(vResult) ) $("#txtDlCode4").val(JSON.stringify(vJson));
-	$("#divDealMain").html($("#txtDlCode4").val());
-}
-
-
 
 function fn_canIgoToStep(pStep) {
+	if ( pStep == 1 ) return true;
 	var vNowStep = fn_getStep();
 	var vGotoStep = Number(pStep);
+	
+	log("fn_canIgoToStep : " + vNowStep + "/" + vGotoStep);
 
 	if ( vGotoStep <= vNowStep ) return true;
 	
-	var vLength = 0; // 이전단계에 파라메터 세팅이 빈값이 아니어야함.
-	try {
-		var vJson = new Object();
-		vJson = JSON.parse($("#txtDlCode"+ (vGotoStep-1)).val());
-		vLength = vJson.data.length;
-	} catch(e) { }
-	if ( vLength == 0 ) return false;
-	
+	// 이전단계에 파라메터 세팅이 빈값이 아니어야함.
+	if ( fn_isDealInfoEmpty(vGotoStep-1) ) return false;
+
 	return true;
 }
 

@@ -36,9 +36,15 @@ function gf_comnAjaxError(jqXhr, textStatus, errorMessage) {
 	}
 }
 
-function gf_showLocInputer(pParamNow) {
-	// pParamNow 값이 있으면, 해당값 읽어서 편집모드
+function gf_showLocInputer(pParamJson, pCallbackFunction) {
+	// pParamJson 값이 있으면, 해당값 읽어서 편집모드
 	// else 신규등록모드
+	
+	if ( gf_isEmpty(pParamJson) ) {
+		console.log("파라미터없다");
+	} else {
+		console.log("파라미터있다");
+	}
 	
 	$("#txtDepth1Code").val("");
 	$("#txtDepth2Code").val("");
@@ -52,16 +58,16 @@ function gf_showLocInputer(pParamNow) {
 
 	$("#div300").load( "cmLocInputer" );
 	$('#div300').on('hidden.bs.modal', function (e) {
-		if ( typeof fn_showLocInputerCallback == "function" ) {
+		if ( typeof pCallbackFunction == "function" ) {
 			var vInRtn = $("#txtDepth3Code").val();
-			var vOutRtn = {};
+			var vOutRtn = null;
 			
 			// gf_showLocInputer를 호출하는 각화면에서
 			// fn_setLocInputerCallback 를 만들어 리턴을 받으라.
 			try {
 				vOutRtn = JSON.parse(vInRtn);
 			} catch(e) { }
-			fn_showLocInputerCallback(vOutRtn);
+			pCallbackFunction(vOutRtn);
 		} 
 	});
 }
@@ -71,8 +77,11 @@ function gf_nvl(pStr, pIfNullStr) {
 }
 
 function gf_isEmpty(str) {
+	if ( str == null ) return true;
+	if ( typeof str == "undefined" || str.length === 0 ) return true;
+
 	str += ""; // 문자로변환
-    if ( typeof str == 'undefined' || !str || str.length === 0 || str === "" || !/[^\s]/.test(str) || /^\s*$/.test(str) || str.replace(/\s/g,"") === "" ) {
+    if ( str == "undefined" || !str || str === "" || !/[^\s]/.test(str) || /^\s*$/.test(str) || str.replace(/\s/g,"") === "" ) {
         return true;
     } else {
         return false;
@@ -105,3 +114,6 @@ Josa.get = function (josa, jong) {
 }
 
 
+function log(pData) {
+	console.log(pData);
+}
