@@ -3,10 +3,30 @@ $(document).ready(function() {
 	fn_setLocInputer(vGrCode);
 });
 
+var gvReturnValue = new Object();
+function fn_initLocInputer(pParamJson, pCallbackFunction) {
+	gvReturnValue.status = "onLoad";
+	$("#btnLocConfirm").unbind("click").bind("click", function() {
+		
+		if ( gf_isEmpty(gvReturnValue.depth3)
+	      || gvReturnValue.depth3.length == 0 ) {
+			alert("선택된 값이 없습니다.");
+			return;
+		} 
+		
+		$("#div300").modal("hide");
+		if ( typeof pCallbackFunction == "function" ) {
+			gvReturnValue.status = "OK";
+			pCallbackFunction(gvReturnValue);
+		} 
+	});
+}
+
 
 $("#btnLocConfirm").click(function() {
 	$("#div300").modal("hide");
 });
+
 
 function fn_btnLocClick(obj) {
 	var vDepth = $(obj).attr("data-depth");
@@ -44,16 +64,8 @@ function fn_getDongCheckList() {
 			}
 		});
 	}
-
-	var vJson = new Object();
-	vJson.depth1 = JSON.parse($("#txtDepth1Code").val());
-	vJson.depth2 = JSON.parse($("#txtDepth2Code").val());
-	vJson.depth3 = aJsonArray;
-	$("#txtDepth3Code").val(JSON.stringify(vJson));
+	gvReturnValue.depth3 = aJsonArray;
 }
-
-
-
 
 function fn_setLocInputer(pGrCode) {
 	var input_data = { "grCode" : pGrCode };
@@ -70,53 +82,34 @@ function fn_setLocInputerCallback(data, status, xhr) {
 	
 	/////////// 내비게이션 바 시작
 	var vDepth = data[0].DEPTH;
-	var vBreadcrumb = "";
+	var vBreadcrumb ="<li class='breadcrumb-item' data-depth='0' data-code=''><a href='#'>지역</a></li>";
 	if ( vDepth == 1 ) {
-		vBreadcrumb += "<li class='breadcrumb-item' data-depth='0' data-code=''><a href='#'>지역</a></li>";
 		vBreadcrumb += "<li class='breadcrumb-item active'>선택</li>";
-		$("#txtDepth1Code").val("");
-		$("#txtDepth2Code").val("");
-		$("#txtDepth3Code").val("");
-		$("#txtDepth1Cdnm").val("");
-		$("#txtDepth2Cdnm").val("");
-		$("#txtDepth3Cdnm").val("");
-
 		$("#btnLocConfirm").prop('disabled', true);
 	} else if ( vDepth == 2 ) {
-		vBreadcrumb += "<li class='breadcrumb-item' data-depth='0' data-code=''><a href='#'>지역</a></li>";
 		vBreadcrumb += "<li class='breadcrumb-item' data-depth='1' data-code='" + data[0].DP1_CODE + "''><a href='#'>" + data[0].DP1_CDNM + "</a></li>";
 		vBreadcrumb += "<li class='breadcrumb-item active'>선택</li>";
-		$("#txtDepth1Code").val(data[0].DP1_CODE);
-		$("#txtDepth2Code").val("");
-		$("#txtDepth3Code").val("");
-		$("#txtDepth1Cdnm").val(data[0].DP1_CDNM);
-		$("#txtDepth2Cdnm").val("");
-		$("#txtDepth3Cdnm").val("");
 
 		$("#btnLocConfirm").prop('disabled', true);
 	} else if ( vDepth == 3 ) {
-		vBreadcrumb += "<li class='breadcrumb-item' data-depth='0' data-code=''><a href='#'>지역</a></li>";
 		vBreadcrumb += "<li class='breadcrumb-item' data-depth='1' data-code='" + data[0].DP1_CODE + "''><a href='#'>" + data[0].DP1_CDNM + "</a></li>";
 		vBreadcrumb += "<li class='breadcrumb-item' data-depth='2' data-code='" + data[0].DP2_CODE + "''><a href='#'>" + data[0].DP2_CDNM + "</a></li>";
 		vBreadcrumb += "<li class='breadcrumb-item active'>선택</li>";
-		
-
-		var vSi = new Object();
-		var vGu = new Object();
-		vSi.code = data[0].DP1_CODE;
-		vSi.cdnm = data[0].DP1_CDNM
-		vGu.code = data[0].DP2_CODE;
-		vGu.cdnm = data[0].DP2_CDNM;
-
-		$("#txtDepth1Code").val(JSON.stringify(vSi));
-		$("#txtDepth2Code").val(JSON.stringify(vGu));
-		$("#txtDepth3Code").val("");
-		$("#txtDepth1Cdnm").val(data[0].DP1_CDNM);
-		$("#txtDepth2Cdnm").val(data[0].DP2_CDNM);
-		$("#txtDepth3Cdnm").val("");
 
 		$("#btnLocConfirm").prop('disabled', false);
 	}
+
+	var vSi = new Object();
+	var vGu = new Object();
+	vSi.code = data[0].DP1_CODE;
+	vSi.cdnm = data[0].DP1_CDNM
+	vGu.code = data[0].DP2_CODE;
+	vGu.cdnm = data[0].DP2_CDNM;
+
+	gvReturnValue.depth1 = vSi;
+	gvReturnValue.depth2 = vGu;
+	gvReturnValue.depth3 = null;
+
 	$("#navSelLoc").html(vBreadcrumb);
 
 	$(".breadcrumb-item").click(function() {
@@ -162,7 +155,7 @@ function fn_setLocInputerCallback(data, status, xhr) {
 
 	}
 	$("#divSelButtons").html(vResult);
-	$("input[id^='chkLocInputEach_']").unbind("click").bind("click", function() { fn_onClickDealMain(this); });
+	//$("input[id^='chkLocInputEach_']").unbind("click").bind("click", function() { fn_onClickDealMain(this); });
 	$(".btn-locSel").unbind("click").bind("click",function() { fn_btnLocClick(this); } );
 	/////////// 목록 끝
 }

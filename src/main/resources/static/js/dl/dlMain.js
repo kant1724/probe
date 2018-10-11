@@ -26,10 +26,10 @@ $(".nav-item a").on("click", function () {
 	fn_goStep(vStep);
 })
 
-function fn_getStep() {	return gf_isEmpty($("#txtStep").val())? 1 : Number($("#txtStep").val()); }
-
-function fn_setStep(pStep) {
-	$("#txtStep").val(pStep);
+function fn_getStep() {	return gf_isEmpty(gvDealInfo[0])? 1 : Number(gvDealInfo[0].step); }
+function fn_setStep(pStep) { 
+	if ( gf_isEmpty(gvDealInfo[0]) ) gvDealInfo[0] = new Object();
+	gvDealInfo[0].step = pStep;
 }
 
 // 스텝에서 빠져나갈수 있으면 다음 스텝 세팅
@@ -51,7 +51,7 @@ function fn_outStep() {
 // 스텝 진입 세팅
 function fn_onStep(pStep) {
 	pStep += "";
-	$("#txtStep").val(pStep);
+	fn_setStep(pStep);
 	$("#tabDealStep" + pStep).tab("show");
 
 	if ( pStep == "1" || pStep == "2" || pStep == "3" ) {
@@ -72,6 +72,7 @@ function fn_onStep(pStep) {
 			gf_showLocInputer( null, function(pData) {
 				fn_step4JsonSaver(pData);
 				fn_step4Draw();
+				fn_makeMents();
 			} );
 		} else { // 기등록건 그림
 		}
@@ -99,6 +100,7 @@ function fn_step4Draw() {
 
 function fn_step4JsonSaver(pData) {
 	if ( gf_isEmpty(pData) ) return;
+	if ( pData.status != "OK" ) return;
 
 	if ( fn_isDealInfoEmpty(4) ) {
 		var vJson = new Object();
@@ -137,7 +139,7 @@ function fn_onClickDealMain(obj) {
 	if ( fn_getStep() == 1 ) fn_goStep(2);
 }
 
-function fn_saveStepParam() {
+function fn_saveStepParam(pData) {
 	var vStep = fn_getStep();
 
 	if ( vStep == "1" || vStep == "2" || vStep == "3" ) {
@@ -197,7 +199,7 @@ function fn_canIgoToStep(pStep) {
 	if ( vGotoStep <= vNowStep ) return true;
 	
 	// 이전단계에 파라메터 세팅이 빈값이 아니어야함.
-	if ( fn_isDealInfoEmpty(vGotoStep-1) ) return false;
+	//if ( fn_isDealInfoEmpty(vGotoStep-1) ) return false;
 
 	return true;
 }
@@ -228,24 +230,23 @@ gvStep[3] = [ {"CODE":1, "CODE_NM":"아파트"  , "STEP":3}
             , {"CODE":9, "CODE_NM":"토지"   , "STEP":3} ];
 
 function fn_getJsonParam(pStep) {
-	var vStr  = "";
-	var vJson = new Object();
-	var vData = $("#txtDlCode" + pStep).val();
-	if ( gf_isEmpty(vData) ) return vStr;
+	if ( fn_isDealInfoEmpty(pStep) ) return;
 
-	try {
-		var vJson = JSON.parse(vData);
-		var vLen = vJson.data.length;
-		if ( vLen == 0 ) {
-		} else if ( vLen == 1 ) {
-			vStr = vJson.data[0].cdnm;
-		} else {
-			for ( var i = 0; i < vLen; i++ ) {
-				vStr += (i>0?", ":"") + vJson.data[i].cdnm;
-			}
-			//vStr = "(" + vStr + ")";
+	var vStr  = "";
+	var vJson = gvDealInfo[pStep].data;
+
+	if ( pStep == "4" ) vJson = gvDealInfo[pStep].data[0].depth3;
+
+	var vLen = vJson.length;
+	if ( vLen == 0 ) {
+	} else if ( vLen == 1 ) {
+		vStr = vJson[0].cdnm;
+	} else {
+		for ( var i = 0; i < vLen; i++ ) {
+			vStr += (i>0?", ":"") + vJson[i].cdnm;
 		}
-	} catch(e) { }
+		//vStr = "(" + vStr + ")";
+	}
 	return vStr;
 }
 
@@ -261,8 +262,8 @@ function fn_makeMents() {
 	if ( !gf_isEmpty(vStep1) ) vMent = "나는 " + vStep1;
 	if ( !gf_isEmpty(vStep2) ) vMent = "나는 " + Josa(vStep2, "를") + " " + vStep1;
 	if ( !gf_isEmpty(vStep3) ) vMent = "나는 " + vStep2 + "로 " + Josa(vStep3, "를") + " " + vStep1;
-	if ( !gf_isEmpty(vStep4) ) vMent = "나는 " + vStep2 + "로 " + vStep4 + "지역의 "+ vStep3 + "를 "+ vStep1;
-	if ( !gf_isEmpty(vStep5) ) vMent = "나는 " + vStep2 + "로 " + vStep4 + "지역의 "+ vStep5 + "정도의 "+ vStep3 + "를 "+ vStep1;
+	if ( !gf_isEmpty(vStep4) ) vMent = "나는 " + vStep2 + "로 " + vStep4 + " 지역의 "+ Josa(vStep3, "를")+ vStep1;
+	if ( !gf_isEmpty(vStep5) ) vMent = "나는 " + vStep2 + "로 " + vStep4 + " 지역의 "+ vStep5 + "정도의 "+ Josa(vStep3, "를")+ vStep1;
 
 	$("#lblJumboMain").text(vMent);
 	

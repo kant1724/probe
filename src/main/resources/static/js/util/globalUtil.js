@@ -39,24 +39,9 @@ function gf_comnAjaxError(jqXhr, textStatus, errorMessage) {
 function gf_showLocInputer(pParamJson, pCallbackFunction) {
 	// pParamJson 값이 있으면, 해당값 읽어서 편집모드
 	// else 신규등록모드
-	
-	if ( gf_isEmpty(pParamJson) ) {
-		console.log("파라미터없다");
-	} else {
-		console.log("파라미터있다");
-	}
-	
-	$("#txtDepth1Code").val("");
-	$("#txtDepth2Code").val("");
-	$("#txtDepth3Code").val("");
-	$("#txtParamGrCode").val("");
-	$("#txtParamDepth").val("");
-	$("#txtParamCode").val("");
-	if($("#div300").css("display") == "none"){
-		$("#btnLocInputer").trigger("click");
-	}
-
-	$("#div300").load( "cmLocInputer" );
+	$("#div300").load( "cmLocInputer", function() { fn_initLocInputer(pParamJson, pCallbackFunction); } );
+	$("#div300").modal("show");
+	/*
 	$('#div300').on('hidden.bs.modal', function (e) {
 		if ( typeof pCallbackFunction == "function" ) {
 			var vInRtn = $("#txtDepth3Code").val();
@@ -70,6 +55,7 @@ function gf_showLocInputer(pParamJson, pCallbackFunction) {
 			pCallbackFunction(vOutRtn);
 		} 
 	});
+	*/
 }
 
 function gf_nvl(pStr, pIfNullStr) {
