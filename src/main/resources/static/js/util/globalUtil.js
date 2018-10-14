@@ -76,6 +76,7 @@ function gf_isEmpty(str) {
 
 
 function Josa(txt, josa) {
+	if ( gf_isEmpty(txt) ) return "";
 	var code = txt.charCodeAt(txt.length-1) - 44032;
 	var cho = 19, jung = 21, jong=28;
 	var i1, i2, code1, code2;
@@ -103,3 +104,12 @@ Josa.get = function (josa, jong) {
 function log(pData) {
 	console.log(pData);
 }
+
+function gf_findJsonIndex(pJson, pKey, pCode) {
+	if ( gf_isEmpty(pJson) ) return -1;
+	for ( var i = 0; i < pJson.length; i++ ) {
+		if ( pJson[i][pKey] == pCode ) return i;
+	}
+	return -1;
+}
+

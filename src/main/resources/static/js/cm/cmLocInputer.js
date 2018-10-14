@@ -125,7 +125,7 @@ function fn_setLocInputerCallback(data, status, xhr) {
 	/////////// 목록 시작
 	var vResult = "";
 	if ( data[0].DEPTH == "3" ) data.unshift({"CODE":"ALL","CODE_NM":"전체", "DEPTH":"3"});
-	console.log(data);
+	//log(data);
 	
 	for ( var i = 0; i < data.length; i++ ) {
 		//vResult += "<div class='btn-locSel col-4 border' data-code='"+ data[i].CODE +"' data-depth='"+data[i].DEPTH+"'>" + data[i].CODE_NM + "</div>";
