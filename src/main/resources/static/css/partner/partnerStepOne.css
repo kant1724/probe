@@ -1,8 +1,8 @@
 .header {
 	position: relative;
-	width: 100%;
-	background: #FAFAFA;
 	font-size: 0.8em;
+	margin: auto;
+    width: 280px;
 }
 
 .content {
@@ -19,7 +19,7 @@
 	position: relative;
 	display: inline-block;
 	margin-top: 20px;
-	margin-left: 20px;
+	margin-bottom: 20px;
 	height: 50px;
 	width: 50px;
 	background: #6799FF;
@@ -35,6 +35,8 @@
 #stepTwo {
 	position: relative;
 	display: inline-block;
+	margin-top: 20px;
+	margin-bottom: 20px;
 	margin-left: 20px;
 	height: 50px;
 	width: 50px;
@@ -51,6 +53,8 @@
 #stepThree {
 	position: relative;
 	display: inline-block;
+	margin-top: 20px;
+	margin-bottom: 20px;
 	margin-left: 20px;
 	height: 50px;
 	width: 50px;
@@ -67,6 +71,8 @@
 #stepFour {
 	position: relative;
 	display: inline-block;
+	margin-top: 20px;
+	margin-bottom: 20px;
 	margin-left: 20px;
 	height: 50px;
 	width: 50px;
@@ -114,4 +120,14 @@
 
 #applicantType {
 	position: relative;
+}
+
+.partner-input {
+	display:block;
+	margin: auto;
+	width: 70%;
+	height: 35px;
+	margin-bottom: 20px;
+\	broder: 1px solid #ccc;
+	outline: none;
 }
