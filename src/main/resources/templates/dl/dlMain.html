@@ -1,4 +1,5 @@
 <meta charset="UTF-8">
+<script src="../js/dl/dlMain.js"></script>
 
 <div class="jumbotron">
   <h1 class="display-6" id="lblJumboMain">나는 원해요</h1>
@@ -7,8 +8,6 @@
 </div>
 
 <div class="container">
-
-		
 	<ul class="nav nav-tabs justify-content-center">
 	  <li class="nav-item"><a id="tabDealStep1" class="nav-link active" href="#" data-step="1">구분</a></li>
 	  <li class="nav-item"><a id="tabDealStep2" class="nav-link" href="#" data-step="2">방식</a></li>
@@ -18,7 +17,6 @@
 	  <li class="nav-item"><a id="tabDealStep6" class="nav-link" href="#" data-step="6">의견</a></li>
 	</ul>
 	
-	<button type="button" class="btn btn-outline-primary btn-block" id="btnOkNext" >OK Next</button>
 	<br>
 	<div class="container">
 	  <div class="row" id="divDealMain" name="divDealMain">
@@ -27,8 +25,28 @@
 	  
 	</div>
 	
+	<div class="fixed-bottom">
+		<button type="button" class="btn btn-outline-primary btn-block" id="btnOkNext" >다음</button>
+	</div>
 
 	<input id="txtDlBeCode1" type="text" th:value="${dlValStep1}" class="sr-only">
 
 </div>
-<script src="../js/dl/dlMain.js"></script>
+
+<script id="stepCard_1N_Template" type="text/html">
+</script>
+<script id="stepCard_1Y_Template" type="text/html">
+</script>
+<script id="stepCard_3N_Template" type="text/html">
+</script>
+<script id="stepCard_3Y_Template" type="text/html">
+</script>
+
+<script id="stepCardTemplate" type="text/html">
+{{#.}}
+<div class="custom-control custom-checkbox dl_dealMain col-4 border" data-code="{{code}}" data-step="{{STEP}}">
+	<input type="checkbox" class="custom-control-input" id="chkDealMain_{{code}}" data-cdnm="{{cdnm}}" data-code="{{code}}" data-step="{{STEP}}">
+	<label class="custom-control-label" for="chkDealMain_{{code}}">{{cdnm}}</label>
+</div>
+{{/.}}
+</script>
