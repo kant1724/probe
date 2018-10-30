@@ -75,6 +75,11 @@ public class CMComnController {
 
 		return retList; 
 	}
-	
-	
+
+	@RequestMapping("/cmFooter")
+	//public String cmFooter(@RequestBody String body, Model model) {
+	public String cmFooter(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+		model.addAttribute("name", "SpringBlog from Millky");
+		return "cm/cmFooter";
+	}
 }

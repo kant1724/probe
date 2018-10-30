@@ -3,7 +3,9 @@
  * data : 파라미터 
  */
 function goPage(pUrl, data, complete) {
-	if ( $("#navbarTogglerDemo03").css("display") == "block" 
+	log($("#navToggler").css("display") );
+	log($(".navbar-toggler").css("display"));
+	if ( $("#navToggler").css("display") == "block" 
 	  && $(".navbar-toggler").css("display") == "block"  ) {
 		$(".navbar-toggler").trigger("click");
 	} // 사이드메뉴 집어넣기
