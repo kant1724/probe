@@ -20,7 +20,13 @@
 
 #apply {
 	position: relative;
-	top: 50px;
+	width: 80%;
+}
+
+.title-divider {
+	border-bottom: 1px solid #ccc;
+	width: 80%;
+	margin: auto;
 }
 
 .partnerMain-description {
