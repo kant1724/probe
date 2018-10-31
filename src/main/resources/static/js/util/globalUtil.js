@@ -3,13 +3,14 @@
  * data : 파라미터 
  */
 function goPage(pUrl, data, complete) {
-	log($("#navToggler").css("display") );
-	log($(".navbar-toggler").css("display"));
+	/*log($("#navToggler").css("display") + " / " + $(".navbar-toggler").css("display"));
 	if ( $("#navToggler").css("display") == "block" 
 	  && $(".navbar-toggler").css("display") == "block"  ) {
 		$(".navbar-toggler").trigger("click");
 	} // 사이드메뉴 집어넣기
-
+	 */
+	$("#div110").load( "cmNav" );
+	
 	$("#div120").load(pUrl, data, complete);
 }
 
