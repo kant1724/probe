@@ -57,13 +57,7 @@ function fn_onStep(pStep) {
 
 	if ( pStep == "1" || pStep == "2" || pStep == "3" ) {
 		var vData = gvStep[pStep];
-		var vResult = "";
-		for ( var i = 0; i < vData.length; i++ ) {
-			vResult += "<div class='custom-control custom-checkbox dl_dealMain col-4 border' data-code='"+ vData[i].code +"' data-step='"+vData[i].STEP+"'>"; 
-			vResult += "<input type='checkbox' class='custom-control-input' id='chkDealMain_"+ vData[i].code +"' data-cdnm='" + vData[i].cdnm + "' data-code='"+ vData[i].code +"' data-step='"+vData[i].STEP+"'>";
-			vResult += "<label class='custom-control-label' for='chkDealMain_"+ vData[i].code +"'>"+vData[i].cdnm+"</label>";
-			vResult += "</div>";
-		}
+		var vResult = Mustache.render($("#stepCardTemplate").html(), vData);
 		$("#divDealMain").html(vResult);
 		$("input[id^='chkDealMain_']").unbind("click").bind("click", function() { fn_onClickDealMain(this); });
 

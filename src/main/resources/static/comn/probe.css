@@ -1,0 +1,14 @@
+body {
+	font-family: 'Nanum Gothic', sans-serif !important;
+}
+
+.pb-bgc1 {
+    background-color: #ff3344!important;
+}
+
+.bg-light {
+    /* background-color: #f8f9fa!important; */
+    background-color: #00bb33;
+}
+
+.navbar-light{ background-color: #e74c3c; }
