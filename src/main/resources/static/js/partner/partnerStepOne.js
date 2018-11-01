@@ -5,6 +5,7 @@ $(document).ready(function() {
 	$("#goNext").click(function() {
 		goNext();
 	});
+	$('#content').fadeIn(500);
 });
 
 
