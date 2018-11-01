@@ -24,7 +24,7 @@ public class PartnerMainController {
 	}
 	
 	@RequestMapping("/partnerStepTwo")
-	public String partnerStepTwo(@RequestParam("name") String name, Model model) {
+	public String partnerStepTwo(Model model) {
 		return "partner/partnerStepTwo";
 	}
 	

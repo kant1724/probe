@@ -2,7 +2,9 @@ $(document).ready(function() {
 	$("#registerPartner").click(function() {
 		registerPartner();
 	});
-	
+	$("#goNext").click(function() {
+		goNext();
+	});
 });
 
 
@@ -13,4 +15,9 @@ function registerPartner() {
 	option.data = {"irsNo" : irsNo};
 	gf_ajax(option);
 	
+}
+
+function goNext() {	
+	var url = '/partnerStepTwo';
+	goPage(url);	
 }
