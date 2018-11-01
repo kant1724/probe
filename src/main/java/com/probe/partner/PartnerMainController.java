@@ -33,6 +33,11 @@ public class PartnerMainController {
 		return "partner/partnerStepThree";
 	}
 	
+	@RequestMapping("/partnerStepFour")
+	public String partnerStepFour(Model model) {
+		return "partner/partnerStepFour";
+	}
+	
 	@RequestMapping("/registerPartnerInfo")
 	public String registerPartnerInfo(@RequestBody Map<String,Object> body) {
 		String irsNo = body.get("irsNo").toString();

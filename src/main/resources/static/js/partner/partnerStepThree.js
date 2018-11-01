@@ -9,7 +9,7 @@ $(document).ready(function() {
 });
 
 function goNext() {	
-	var url = '/partnerStepThree';
+	var url = '/partnerStepFour';
 	goPage(url);	
 }
 

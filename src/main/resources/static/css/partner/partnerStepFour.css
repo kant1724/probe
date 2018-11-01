@@ -28,7 +28,6 @@
 	width: 23.5%;
 	border-right: 1px solid #ccc;
 	font-size: 14px;
-	font-weight: 700;
 }
 
 #stepFour {
@@ -38,16 +37,12 @@
 	width: 23.5%;
 	border-right: 1px solid #ccc;
 	font-size: 14px;
+	font-weight: 700;
 }
 
 .line-divider {
 	border-bottom: 1px solid #ccc;
 	width: 80%;
 	margin: auto;
-}
-
-#localtion_selected_text {
-	font-size: 12px;
-	color: #333;	
 }
 
