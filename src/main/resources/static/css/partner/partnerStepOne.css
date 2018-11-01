@@ -88,24 +88,10 @@
 	margin: auto;
 }
 
-.input-title-box {
-	width: 200px;
-}
-
 #applicantType {
 	position: relative;
 	width: 80%;
 	margin: auto;
-}
-
-.partner-input {
-	display:block;
-	margin: auto;
-	width: 70%;
-	height: 35px;
-	margin-bottom: 20px;
-	broder: 1px solid #ccc;
-	outline: none;
 }
 
 .title-divider {
