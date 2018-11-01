@@ -1,16 +1,25 @@
 package com.probe.partner;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.probe.user.UserMainVo;
 
 @Controller
 public class PartnerMainController {
+	@Autowired
+	PartnerMainService partnerMainService;
+	
 	@RequestMapping("/partnerMain")
 	public String partnerMain(Model model) {
 		return "partner/partnerMain";
@@ -44,5 +53,13 @@ public class PartnerMainController {
 		System.out.println("irsNo:" + irsNo);
 		
 		return "partner/partnerStepTwo";
+	}
+	
+	@RequestMapping("/selectAllAddress")
+	@ResponseBody
+	public List<PartnerMainVo> selectAllAddress(@RequestBody HashMap<String, Object> body) {
+		List<PartnerMainVo> retList = partnerMainService.selectAllAddress();
+		
+		return retList;
 	}
 }

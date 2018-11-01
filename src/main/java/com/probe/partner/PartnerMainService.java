@@ -1,5 +1,6 @@
 package com.probe.partner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,10 +10,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class PartnerMainService {
 	@Autowired
-	PartnerMainDao dlComnDao;
+	PartnerMainDao partnerMainDao;
 	
-	public List<HashMap<String, Object>> fnGetLocCdnmList(HashMap<String,Object> map) {
-		List<HashMap<String, Object>> retList = dlComnDao.fnGetLocCdnmList(map);
+	public List<PartnerMainVo> selectAllAddress() {
+		List<HashMap<String, Object>> res = partnerMainDao.selectAllAddress();
+		
+		List<PartnerMainVo> retList = new ArrayList<PartnerMainVo>(); 
+		for (int i = 0; i < res.size(); ++i) {
+			PartnerMainVo retVo = new PartnerMainVo();
+			retList.add(retVo);
+		}
+		
 		return retList;
 	}
 }

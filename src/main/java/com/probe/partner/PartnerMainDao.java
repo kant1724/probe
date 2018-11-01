@@ -7,7 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface PartnerMainDao {
-	  List<HashMap<String,Object>> fnGetLocCdnmList(HashMap<String,Object> map);
-	  //List<UserMainVo> selectAllAddress();
-	  //void insert(UserMainVo userMain);
+	  List<HashMap<String,Object>> selectAllAddress();
 }

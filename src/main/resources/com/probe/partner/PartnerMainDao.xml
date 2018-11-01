@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.probe.deal.PartnerMainDao">
+
+    <select id="selectAllAddress" resultType="java.util.HashMap">
+		SELECT LEGAL_DONG_CD
+			 , SI_DO_NM
+			 , SI_GUN_GU_NM
+			 , LEGAL_UEP_MYUN_DONG_NM
+			 , LEGAL_RI_NM
+		  FROM TB_AD002
+		 WHERE 1=1
+    </select>
+</mapper>
