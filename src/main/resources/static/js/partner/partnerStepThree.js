@@ -34,17 +34,13 @@ function setLocation() {
 	locationObj.empty();
 	if (currentDepth < 3) {
 		for (var i = 0; i < codeNmArr.length; ++i) {
-			locationObj.hide();
 			var loc = '<button id="' + codeArr[i] + '" style="font-size: 11px; margin: 5px;" type="button" class="btn btn-primary loc1">' + codeNmArr[i] + '</button>'
 			locationObj.append(loc);
-			locationObj.fadeIn(200);
 		}
 	} else {
 		for (var i = 0; i < codeNmArr.length; ++i) {
-			locationObj.hide();
 			var loc = '<label class="checkbox">' + codeNmArr[i] + '<input id="' + codeArr[i] + '" type="checkbox"><span class="checkmark"></span></label>'
 			locationObj.append(loc);
-			locationObj.fadeIn(200);
 		}
 	}
 	$(".btn.btn-primary.loc1").click(function() {
@@ -73,6 +69,9 @@ function addAddress() {
 	}
 	var tbody = '<tr><td>' + currentSi + '</td><td>' + currentGu + '</td><td>' + total + '개 동</td>';
 	$('#location_selected_table').append(tbody);
+	var f = $('#location_selected_table').children();
+	$(f[f.length - 1]).hide();
+	$(f[f.length - 1]).fadeIn(500);
 }
 
 function selectAddress(grCode) {
