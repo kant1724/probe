@@ -4,7 +4,7 @@ $(document).ready(function() {
 	$("#goNext").click(function() {
 		goNext();
 	});
-	$("#select").click(function() {
+	$("#select").click(function() {		
 		$("#select_div").css('display', 'none');
 		currentDepth = 0;
 		addAddress();
@@ -54,6 +54,11 @@ function setLocation() {
 			selectAddress(grCode);
 		}
 	});
+	if (currentDepth > 1) {
+		$("#back_div").css('display', 'block');
+	} else {
+		$("#back_div").css('display', 'none');
+	}
 	if (currentDepth == 3) {
 		$("#select_div").css('display', 'block');
 	}
@@ -67,8 +72,13 @@ function addAddress() {
 			total += 1;
 		}
 	}
+	var click_trash_id = 'click_trash_' + $('#location_selected_table').children().length; 
 	var tbody = '<tr><td>' + currentSi + '</td><td>' + currentGu + '</td><td>' + total + '건</td>';
+		tbody += '<td class="delete-location"><i id="' + click_trash_id + '" class="fal fa-trash-alt"></i></td></tr>';
 	$('#location_selected_table').append(tbody);
+	$('#' + click_trash_id).click(function() {
+		$(this).parent().parent().remove();
+	});
 	var f = $('#location_selected_table').children();
 	$(f[f.length - 1]).hide();
 	$(f[f.length - 1]).fadeIn(500);
