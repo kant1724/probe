@@ -1,10 +1,10 @@
 var locationObj;
 $(document).ready(function() {
+	$('body').css('display', 'block');
 	$("#goNext").click(function() {
 		goNext();
 	});
 	locationObj = $('.location');
-	
 	setLocation();
 	$('#content').fadeIn(500);
 });

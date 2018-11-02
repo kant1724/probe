@@ -1,11 +1,12 @@
 $(document).ready(function() {
+	$('body').css('display', 'block');
 	$("#registerPartner").click(function() {
 		registerPartner();
 	});
 	$("#goNext").click(function() {
 		goNext();
 	});
-	$('#content').fadeIn(500);
+	$('#content').fadeIn(500);	
 });
 
 
