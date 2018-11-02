@@ -67,7 +67,7 @@ function addAddress() {
 			total += 1;
 		}
 	}
-	var tbody = '<tr><td>' + currentSi + '</td><td>' + currentGu + '</td><td>' + total + '개 동</td>';
+	var tbody = '<tr><td>' + currentSi + '</td><td>' + currentGu + '</td><td>' + total + '건</td>';
 	$('#location_selected_table').append(tbody);
 	var f = $('#location_selected_table').children();
 	$(f[f.length - 1]).hide();
