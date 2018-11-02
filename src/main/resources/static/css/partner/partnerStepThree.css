@@ -50,6 +50,13 @@ body {
 	margin: auto;
 }
 
+.location-selected {
+	display: none;
+	width: 85%;
+	margin: auto;
+	font-size: 11px;
+}
+
 #localtion_selected_text {
 	font-size: 12px;
 	color: #333;	
