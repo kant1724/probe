@@ -5,6 +5,7 @@ $(document).ready(function() {
 		goNext();
 	});
 	locationObj = $('.location');
+	selectAddress1();
 	setLocation();
 	$('#content').fadeIn(500);
 });
@@ -23,4 +24,14 @@ function setLocation() {
 	$(".btn.btn-primary.loc1").click(function() {
 		$("#select_div").css('display', 'block');
 	});
+}
+
+function selectAddress1() {
+	var option = {};
+		option.url = '/dlFnGetLocCdnmList';
+		option.success = function(data, status, xhr) {
+            alert(1);
+        };
+        option.data = {};
+	gf_ajax(option);
 }

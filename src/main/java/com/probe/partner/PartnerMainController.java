@@ -54,12 +54,5 @@ public class PartnerMainController {
 		
 		return "partner/partnerStepTwo";
 	}
-	
-	@RequestMapping("/selectAllAddress")
-	@ResponseBody
-	public List<PartnerMainVo> selectAllAddress(@RequestBody HashMap<String, Object> body) {
-		List<PartnerMainVo> retList = partnerMainService.selectAllAddress();
-		
-		return retList;
-	}
+
 }
