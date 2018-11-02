@@ -4,6 +4,11 @@ $(document).ready(function() {
 	$("#goNext").click(function() {
 		goNext();
 	});
+	$("#select").click(function() {
+		$("#select_div").css('display', 'none');
+		currentDepth = 1;
+		selectAddress("");
+	});
 	locationObj = $('.location');
 	selectAddress("");	
 	$('#content').fadeIn(500);
@@ -24,16 +29,15 @@ function setLocation() {
 		locationObj.append(loc1);
 	}
 	$(".btn.btn-primary.loc1").click(function() {
-		if (currentDepth < 4) {
+		if (currentDepth < 3) {
 			var grCode = $(this).prop('id');
 			selectAddress(grCode);
 			currentDepth += 1;
-		} else {
-			$("#select_div").css('display', 'block');
-			currentDepth = 1;
 		}
 	});
-	
+	if (currentDepth == 2) {
+		$("#select_div").css('display', 'block');
+	}
 }
 
 function selectAddress(grCode) {
