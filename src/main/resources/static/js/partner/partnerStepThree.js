@@ -6,7 +6,7 @@ $(document).ready(function() {
 	});
 	$("#select").click(function() {
 		$("#select_div").css('display', 'none');
-		currentDepth = 1;
+		currentDepth = 0;
 		selectAddress("");
 	});
 	locationObj = $('.location');
@@ -19,23 +19,30 @@ function goNext() {
 	goPage(url);	
 }
 
-var currentDepth = 1;
+var currentDepth = 0;
 var codeArr = [];
 var codeNmArr = [];
 function setLocation() {
 	locationObj.empty();
-	for (var i = 0; i < codeNmArr.length; ++i) {
-		var loc1 = '<button id="' + codeArr[i] + '" style="font-size: 11px; margin: 5px;" type="button" class="btn btn-primary loc1">' + codeNmArr[i] + '</button>'
-		locationObj.append(loc1);
+	if (currentDepth < 3) {
+		for (var i = 0; i < codeNmArr.length; ++i) {
+			var loc1 = '<button id="' + codeArr[i] + '" style="font-size: 11px; margin: 5px;" type="button" class="btn btn-primary loc1">' + codeNmArr[i] + '</button>'
+			locationObj.append(loc1);
+		}
+	} else {
+		for (var i = 0; i < codeNmArr.length; ++i) {
+			var loc1 = '<label class="checkbox">' + codeNmArr[i] + '<input id="" type="checkbox"><span class="checkmark"></span></label>'
+			locationObj.append(loc1);
+		}
+		
 	}
 	$(".btn.btn-primary.loc1").click(function() {
 		if (currentDepth < 3) {
 			var grCode = $(this).prop('id');
 			selectAddress(grCode);
-			currentDepth += 1;
 		}
 	});
-	if (currentDepth == 2) {
+	if (currentDepth == 3) {
 		$("#select_div").css('display', 'block');
 	}
 }
@@ -60,6 +67,7 @@ function selectAddress(grCode) {
 				codeArr.push(code);
 				codeNmArr.push(codeNm);
 			}
+			currentDepth += 1;
 			setLocation();
 		};
         option.data = {"grCode" : grCode};
