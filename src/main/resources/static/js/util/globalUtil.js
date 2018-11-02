@@ -1,3 +1,17 @@
+$(document).ready(function() {
+	window.addEventListener("popstate", function(e){ gf_onBackClick(e); } );
+
+});
+
+
+function gf_onBackClick(e) {
+	log(e.state);
+	if ( e.state == null ) return;
+	var vTarget = e.state.target;
+	var vData = e.state.data;
+	$(vTarget).html(vData);
+}
+
 /*
  * 프로젝트 전반에 공통으로 쓰이는 스크립트
  * data : 파라미터 
@@ -9,8 +23,10 @@ function goPage(pUrl, data, complete) {
 		$(".navbar-toggler").trigger("click");
 	} // 사이드메뉴 집어넣기
 	 */
+	var state = { target : "#div120", data : $("#div120").html() };
+	window.history.pushState(state, "", "#"+pUrl);
+
 	$("#div110").load( "cmNav" );
-	
 	$("#div120").load(pUrl, data, complete);
 }
 
