@@ -5,8 +5,7 @@ $(document).ready(function() {
 		goNext();
 	});
 	locationObj = $('.location');
-	selectAddress1();
-	setLocation();
+	selectAddress1();	
 	$('#content').fadeIn(500);
 });
 
@@ -15,10 +14,11 @@ function goNext() {
 	goPage(url);	
 }
 
-var a = ['서울', '경기', '경상', '전라', '제주'];
+var codeNmArr = [];
 function setLocation() {
-	for (var i = 0; i < 5; ++i) {
-		var loc1 = '<button id="" style="margin: 5px; width: 20%;" type="button" class="btn btn-primary loc1">' + a[i] + '</button>'
+	locationObj.empty();
+	for (var i = 0; i < codeNmArr.length; ++i) {
+		var loc1 = '<button id="" style="font-size: 11px; margin: 5px;" type="button" class="btn btn-primary loc1">' + codeNmArr[i] + '</button>'
 		locationObj.append(loc1);
 	}
 	$(".btn.btn-primary.loc1").click(function() {
@@ -30,8 +30,21 @@ function selectAddress1() {
 	var option = {};
 		option.url = '/dlFnGetLocCdnmList';
 		option.success = function(data, status, xhr) {
-            alert(1);
-        };
-        option.data = {};
+			codeNmArr = [];
+			for (var i = 0; i < data.length; ++i) {
+				var codeNm = data[i].CODE_NM;
+				var depth = data[i].DEPTH;
+				var grCode = data[i].GR_CODE;
+				var dp1Code = data[i].DP1_CODE;
+				var dp1Code = data[i].DP1_CONM;
+				var dp2Code = data[i].DP2_CODE;
+				var dp2Cdnm = data[i].DP2_CDNM;
+				var dp3Code = data[i].DP3_CODE;
+				var dp3Cdnm = data[i].DP3_CDNM;
+				codeNmArr.push(codeNm);
+			}
+			setLocation();
+		};
+        option.data = {"grCode" : ""};
 	gf_ajax(option);
 }
