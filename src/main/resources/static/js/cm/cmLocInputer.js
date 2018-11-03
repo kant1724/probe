@@ -17,6 +17,8 @@ function fn_initLocInputer(pParamJson, pCallbackFunction) {
 		$("#div300").modal("hide");
 		if ( typeof pCallbackFunction == "function" ) {
 			gvReturnValue.status = "OK";
+			log("localInputer");
+			log(gvReturnValue);
 			pCallbackFunction(gvReturnValue);
 		} 
 	});
@@ -29,16 +31,12 @@ $("#btnLocConfirm").click(function() {
 
 
 function fn_btnLocClick(obj) {
-	var vDepth = $(obj).attr("data-depth");
+	var vDepth = $(obj).data("depth");
 	if ( vDepth == 1 || vDepth == 2 ) {
-		var vGrCode = $(obj).attr("data-code");
+		var vGrCode = $(obj).data("code");
 		fn_setLocInputer(vGrCode);
+
 	} else if ( vDepth == 3 ) {
-		var vCode = $(obj).attr("data-code");
-		if ( vCode == "ALL" ) {
-			 var vTF = $("#chkLocInputEach_ALL").prop("checked") ;
-			 $(".custom-control-input").attr('checked', vTF);
-		}
 		fn_getDongCheckList();
 	}
 }
@@ -46,20 +44,19 @@ function fn_btnLocClick(obj) {
 function fn_getDongCheckList() {
 
 	var aJsonArray = new Array();
-	
+
 	if ( $("#chkLocInputEach_ALL").prop("checked") ) {
 		var aJson = new Object();
-		aJson.code = $("#chkLocInputEach_ALL").attr("data-code");
-		aJson.cdnm = $("#chkLocInputEach_ALL").attr("data-cdnm");
+		aJson.code = $("#chkLocInputEach_ALL").data("code");
+		aJson.cdnm = $("#chkLocInputEach_ALL").data("cdnm");
 		aJsonArray.push(aJson);
 
 	} else {
-
 		$("input[id^='chkLocInputEach_']").each(function() { 
 			if ( $(this).prop("checked") ) {
 				var aJson = new Object();
-				aJson.code = $(this).attr("data-code");
-				aJson.cdnm = $(this).attr("data-cdnm");
+				aJson.code = $(this).data("code");
+				aJson.cdnm = $(this).data("cdnm");
 				aJsonArray.push(aJson);
 			}
 		});
@@ -113,9 +110,9 @@ function fn_setLocInputerCallback(data, status, xhr) {
 	$("#navSelLoc").html(vBreadcrumb);
 
 	$(".breadcrumb-item").click(function() {
-		var vDepth = $(this).attr("data-depth");
+		var vDepth = $(this).data("depth");
 		if ( vDepth == 0 || vDepth == 1 || vDepth == 2 ) {
-			var vGrCode = $(this).attr("data-code");
+			var vGrCode = $(this).data("code");
 			fn_setLocInputer(vGrCode);
 		}
 	});
@@ -125,37 +122,16 @@ function fn_setLocInputerCallback(data, status, xhr) {
 	/////////// 목록 시작
 	var vResult = "";
 	if ( data[0].DEPTH == "3" ) data.unshift({"CODE":"ALL","CODE_NM":"전체", "DEPTH":"3"});
-	//log(data);
-	
-	for ( var i = 0; i < data.length; i++ ) {
-		//vResult += "<div class='btn-locSel col-4 border' data-code='"+ data[i].CODE +"' data-depth='"+data[i].DEPTH+"'>" + data[i].CODE_NM + "</div>";
 
-		/* // 버튼형
-		vResult += "<div class='btn-locSel col-4' data-code='"+ data[i].CODE +"' data-depth='"+data[i].DEPTH+"'>" 
-		vResult +="<div class='btn-group-toggle' data-toggle='buttons'>";
-		vResult +=  "<label class='btn btn-secondary active'>";
-		vResult +=    "<input type='checkbox' checked autocomplete='off'> " + data[i].CODE_NM;
-		vResult +=  "</label>";
-		vResult +="</div>";
-	    vResult += "</div>";
-	    */
-		
-		 // 체크박스
-		vResult += "<div class='custom-control custom-checkbox btn-locSel col-4 border' data-code='"+ data[i].CODE +"' data-depth='"+data[i].DEPTH+"'>"; 
-		vResult += "<input type='checkbox' class='custom-control-input' id='chkLocInputEach_"+ data[i].CODE +"' data-code='"+ data[i].CODE +"' data-cdnm='"+ data[i].CODE_NM +"'>";
-		vResult += "<label class='custom-control-label' for='chkLocInputEach_"+ data[i].CODE +"'>"+data[i].CODE_NM+"</label>";
-		vResult += "</div>";
-
-		/* //라디오
-		vResult += "<div class='custom-control custom-radio btn-locSel col-4 border' data-code='"+ data[i].CODE +"' data-depth='"+data[i].DEPTH+"'>"; 
-		vResult += "<input type='radio' class='custom-control-input' id='chkLocInputEach_"+ data[i].CODE +"' name='customRadio'>";
-		vResult += "<label class='custom-control-label' for='chkLocInputEach_"+ data[i].CODE +"'>"+data[i].CODE_NM+"</label>";
-		vResult += "</div>";
-		*/
-
-	}
+	var vResult = Mustache.render($("#locButtonTemplate").html(), data);
 	$("#divSelButtons").html(vResult);
-	//$("input[id^='chkLocInputEach_']").unbind("click").bind("click", function() { fn_onClickDealMain(this); });
-	$(".btn-locSel").unbind("click").bind("click",function() { fn_btnLocClick(this); } );
-	/////////// 목록 끝
+	//$(".btnLocSel").off("click").on("click", function() { fn_btnLocClick(this); } );
+	
+	if ( data[0].DEPTH == "3" ) $("#chkLocInputEach_ALL").addClass("chkChkboxAll");
+	
+
+	if ( data[0].DEPTH == "1" || data[0].DEPTH == "2" ) gf_btnChkboxNoChk($(".chkChkbox")); // 체크박스 없다.
+	gf_btnChkboxEvent($(".btnChkbox"), $(".chkChkbox"), function(obj) { fn_btnLocClick(obj); });
+	
+
 }

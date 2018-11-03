@@ -1,27 +1,36 @@
 
-	<meta charset="UTF-8">
-	<script src="../js/cm/cmLocInputer.js"></script>
-	
-	<div class="modal-content">
-		<div class="modal-header">
-			<h4 class="modal-title">지역선택</h4>
-			<button type="button" class="close" data-dismiss="modal">×</button>
-		</div>
-	
-		<div class="modal-body" id="divLocMain">
-			<nav aria-label="breadcrumb">
-				<ol class="breadcrumb" id="navSelLoc" name="navSelLoc"></ol>
-			</nav>
-			
-			<div class="container">
-				<div class="row" id="divSelButtons" name="divSelButtons">
-				Loading...
-				</div>
+<meta charset="UTF-8">
+<script src="/js/cm/cmLocInputer.js"></script>
+<link rel="stylesheet" href="/css/cm/cmLocInputer.css">
+
+<div class="modal-content">
+	<div class="modal-header">
+		<h4 class="modal-title">지역선택</h4>
+		<button type="button" class="close" data-dismiss="modal">×</button>
+	</div>
+
+	<div class="modal-body" id="divLocMain">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb" id="navSelLoc" name="navSelLoc"></ol>
+		</nav>
+		
+		<div class="container">
+			<div class="row" id="divSelButtons" name="divSelButtons">
+			Loading...
 			</div>
 		</div>
-
-	    <div class="modal-footer">
-	      <button type="button" class="btn btn-primary" id="btnLocConfirm">확인</button>
-	      <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
-	    </div>
 	</div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" id="btnLocConfirm">확인</button>
+      <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+    </div>
+</div>
+
+<script id="locButtonTemplate" type="text/html">
+{{#.}}
+<button type="button" class="btn btn-success btnChkbox" data-code="{{CODE}}" data-depth="{{DEPTH}}">
+<input type="checkbox" class="chkChkbox" id="chkLocInputEach_{{CODE}}" data-code="{{CODE}}" data-cdnm="{{CODE_NM}}"> {{CODE_NM}}
+</button>&nbsp;
+{{/.}}
+</script>

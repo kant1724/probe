@@ -1,11 +1,10 @@
 $(document).ready(function() {
 	window.addEventListener("popstate", function(e){ gf_onBackClick(e); } );
-
 });
 
 
 function gf_onBackClick(e) {
-	log(e.state);
+	//log(e.state);
 	if ( e.state == null ) return;
 	var vTarget = e.state.target;
 	var vData = e.state.data;
@@ -23,8 +22,10 @@ function goPage(pUrl, data, complete) {
 		$(".navbar-toggler").trigger("click");
 	} // 사이드메뉴 집어넣기
 	 */
-	var state = { target : "#div120", data : $("#div120").html() };
-	window.history.pushState(state, "", "#"+pUrl);
+
+	var vSaveData = $("#div120").html();
+	var state = { target : "#div120", data : vSaveData };
+	window.history.pushState(state, "", "#" + pUrl);
 
 	$("#div110").load( "cmNav" );
 	$("#div120").load(pUrl, data, complete);
@@ -131,4 +132,40 @@ function gf_findJsonIndex(pJson, pKey, pCode) {
 	}
 	return -1;
 }
+
+// 버튼형 체크박스와 전체선택 활용
+// btnChkbox, chkChkbox, chkChkboxAll 만 사용
+function gf_btnChkboxEvent(pButtonSelector, pCheckboxSelector, pOnclick) {
+	pButtonSelector.off("click").on("click", function () {
+		gf_btnChkButtonClick(this);
+		pOnclick(this);
+	} );
+
+	pCheckboxSelector.off("click").on("click", function(e) {
+		e.stopPropagation(); // parent인 pButtonSelector의 click이 발동되지 않도록.
+		gf_btnChkCheckClick(this);
+		var obj = $(this).parent(".btnChkbox");
+		pOnclick(obj);
+	});  // 체크박스
+}
+
+function gf_btnChkboxNoChk(pCheckboxSelector) {
+	pCheckboxSelector.hide();
+}
+
+function gf_btnChkCheckClick(obj) {
+	if ( $(obj).hasClass("chkChkboxAll") ) {
+		$(".chkChkbox").prop("checked", $(obj).prop("checked"));
+	} else {
+		//log($(obj).parent().parent().find(".chkChkboxAll")); // 추후 전체선택 끌때 확인
+	}
+}
+
+function gf_btnChkButtonClick(obj) {
+	var vChk = $(obj).find(".chkChkbox");
+	if ( vChk.length > 0 ) vChk.prop("checked", !vChk.prop("checked"));
+	gf_btnChkCheckClick(vChk);
+}
+
+
 

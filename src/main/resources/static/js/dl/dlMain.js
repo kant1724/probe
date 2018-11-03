@@ -4,9 +4,8 @@ $(document).ready(function() {
 
 	// 보통 구해요/팔아요...는 선택한 상태에서 본 레이어가 열린다. 파라미터 처리로 step 1 패스하는 로직
 	var vBeforeParam = fn_getcodeNm(1 ,$("#txtDlBeCode1").val());
-	log("vBeforeParam : " + vBeforeParam);
 	if ( !gf_isEmpty(vBeforeParam) ) {
-		$("input[id^='chkDealMain_'][data-code='" + $("#txtDlBeCode1").val() +"']").attr('checked', true);
+		$("input[id^='chk_btnDealMain_'][data-code='" + $("#txtDlBeCode1").val() +"']").attr('checked', true);
 		fn_saveStepParam();
 		fn_goStep(2);
 	}
@@ -22,8 +21,8 @@ $("#btnOkNext").click(function(){
 });
 
 // 탭바 클릭
-$(".nav-item a").on("click", function () {
-	var vStep = $(this).attr("data-step");
+$(".dlNavDivCol").on("click", function () {
+	var vStep = $(this).data("step");
 	fn_goStep(vStep);
 })
 
@@ -35,11 +34,13 @@ function fn_setStep(pStep) {
 
 // 스텝에서 빠져나갈수 있으면 다음 스텝 세팅
 function fn_goStep(pStep) {
-	log(gvDealInfo);
 	if ( !fn_canIgoToStep(pStep) ) return;
 	fn_outStep();
 	if ( !fn_canIgoToStep(pStep) ) return;
-	fn_onStep(pStep);
+	fn_onStep(pStep)
+
+	$(".dlNavDivCol").removeClass("dlNavDivColActive");
+	$(".dlNavDivCol[data-step^='" +pStep +"']").addClass("dlNavDivColActive"); 
 }
 
 // 스텝 종료 세팅
@@ -48,6 +49,8 @@ function fn_outStep() {
 	fn_saveStepParam(); // 스텝별 결과 세팅
 	fn_makeMents(); // 점보트론
 }
+
+
 
 // 스텝 진입 세팅
 function fn_onStep(pStep) {
@@ -59,7 +62,9 @@ function fn_onStep(pStep) {
 		var vData = gvStep[pStep];
 		var vResult = Mustache.render($("#stepCardTemplate").html(), vData);
 		$("#divDealMain").html(vResult);
-		$("input[id^='chkDealMain_']").unbind("click").bind("click", function() { fn_onClickDealMain(this); });
+
+		if ( pStep == "1" ) gf_btnChkboxNoChk($(".chkChkbox")); // 체크박스 없다.
+		gf_btnChkboxEvent($(".btnChkbox"), $(".chkChkbox"), function(obj) { fn_onClickDealMain(obj); });
 
 	} else if ( pStep == "4" ) {
 		fn_step4Draw();
@@ -101,7 +106,7 @@ function fn_onStep(pStep) {
 		// 방식을 읽어서 금액대 입력
 		var vData = gvDealInfo[2].data;
 		var vResult = "";
-		vResult += "<label for='txtDealEct'>요청사항</label>";
+		vResult += "<i class=\"fal fa-pen-square\"></i> <label for='txtDealEct'>요청사항</label>";
 		vResult += "  <textarea class='form-control' id='txtDealEct' aria-label='With textarea' placeholder='예) 집크기, 학군중요'></textarea>";
 
 		$("#divDealMain").html(vResult);
@@ -179,14 +184,14 @@ function fn_saveStepParam(pData) {
 
 	if ( vStep == "1" || vStep == "2" || vStep == "3" ) {
 		var aJsonArray = new Array();
-	
-		$("input[id^='chkDealMain_']").each(function() { 
+
+		$(".chkBtnDealItem").each(function() { 
 			if ( $(this).prop("checked") ) {
 				var aJson = new Object();
-				aJson.code = $(this).attr("data-code");
-				aJson.cdnm = $(this).attr("data-cdnm");
+				aJson.code = $(this).data("code");
+				aJson.cdnm = $(this).data("cdnm");
 				aJsonArray.push(aJson);
-				//vStep = $(this).attr("data-step");
+				//vStep = $(this).data("step");
 			}
 		});
 
@@ -339,7 +344,7 @@ function fn_makeMents() {
 	if ( !gf_isEmpty(vStep4) ) vMent += " " + vStep4 + " 지역의";
 	if ( !gf_isEmpty(vStep3) ) vMent += " " + Josa(vStep3, "를");
 	//if ( !gf_isEmpty(vStep5) ) vMent += " " + vStep5 + "정도의";
-	vMent += " " + gf_nvl(vStep1, "원해요");
+	vMent += " " + gf_nvl(vStep1, "원해요.");
 	
 	$("#lblJumboMain").text(vMent);
 

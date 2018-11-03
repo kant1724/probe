@@ -6,7 +6,7 @@
 <mapper namespace="com.probe.comn.CMComnDao">
 
     <select id="fnGetLocCdnmList" resultType="java.util.HashMap">
-		SELECT A.CODE,A.CODE_NM, A.DEPTH, A.GR_CODE
+		SELECT A.CODE, A.CODE_NM, A.DEPTH, A.GR_CODE
 		     , IF ( A.DEPTH >= 1, SUBSTR(A.CODE, 1, 2), '') AS DP1_CODE
 		     , SI_DO_NM AS DP1_CDNM
 		     , IF ( A.DEPTH >= 2, SUBSTR(A.CODE, 1, 5), '') AS DP2_CODE
@@ -17,5 +17,7 @@
 		 WHERE 1 = 1
 		   AND A.DEPTH IN ( 1, 2, 3 )
 		   AND A.GR_CODE = IFNULL(#{grCode}, '')
+		 ORDER BY A.CODE_NM
+		   
     </select>
 </mapper>

@@ -6,6 +6,12 @@ $( document ).ready(function() {
    //});
 });
 
+
+$(".navbar-brand").click(function(){
+	goPage("cmWelcome");
+});
+
+
 $("#ptIncome").click(function(){
 	goPage("partnerMain");
 });

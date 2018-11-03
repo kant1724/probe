@@ -1,33 +1,32 @@
 <meta charset="UTF-8">
-<script src="../js/dl/dlMain.js"></script>
-
-<div class="jumbotron">
-  <h1 class="display-6" id="lblJumboMain">나는 원해요</h1>
-  <p class="lead">조건입력.</p>
-  <hr class="my-4">
-</div>
+<script src="/js/dl/dlMain.js"></script>
+<link rel="stylesheet" href="/css/dl/dlMain.css">
 
 <div class="container">
-	<ul class="nav nav-tabs justify-content-center">
-	  <li class="nav-item"><a id="tabDealStep1" class="nav-link active" href="#" data-step="1">구분</a></li>
-	  <li class="nav-item"><a id="tabDealStep2" class="nav-link" href="#" data-step="2">방식</a></li>
-	  <li class="nav-item"><a id="tabDealStep3" class="nav-link" href="#" data-step="3">물건</a></li>
-	  <li class="nav-item"><a id="tabDealStep4" class="nav-link" href="#" data-step="4">지역</a></li>
-	  <li class="nav-item"><a id="tabDealStep5" class="nav-link" href="#" data-step="5">금액</a></li>
-	  <li class="nav-item"><a id="tabDealStep6" class="nav-link" href="#" data-step="6">의견</a></li>
-	</ul>
-	
-	<br>
-	<div class="container">
-	  <div class="row" id="divDealMain" name="divDealMain">
-	            Loading...
+	<div class="dlNavDiv">
+	  <div class="row dlNavRow">
+	    <div class="col dlNavDivCol" data-step="1"><i class="fal fa-clipboard-list"></i><br><span>구분</span></div><i class="fal fa-angle-right"></i>
+	    <div class="col dlNavDivCol" data-step="2"><i class="fal fa-anchor"></i><br><span>방식</span></div><i class="fal fa-angle-right"></i>
+	    <div class="col dlNavDivCol" data-step="3"><i class="fal fa-building"></i><br><span>물건</span></div><i class="fal fa-angle-right"></i>
+	    <div class="col dlNavDivCol" data-step="4"><i class="fal fa-map-marker-check"></i><br><span>지역</span></div><i class="fal fa-angle-right"></i>
+	    <div class="col dlNavDivCol" data-step="5"><i class="fal fa-money-bill-wave"></i><br><span>금액</span></div><i class="fal fa-angle-right"></i>
+	    <div class="col dlNavDivCol" data-step="6"><i class="fal fa-pen-square"></i><br><span>의견</span></div>
 	  </div>
-	  
+	</div>
+
+<div class="jumbotron">
+  <p class="lead" id="lblJumboMain">조건입력.</p>
+</div>
+	<div class="container">
+		<div class="row" id="divDealMain" name="divDealMain">
+			Loading...
+		</div>
 	</div>
 	
 	<div class="fixed-bottom">
-		<button type="button" class="btn btn-outline-primary btn-block" id="btnOkNext" >다음</button>
+		<button type="button" class="btn btn-outline-primary btn-block" id="btnOkNext">다음</button>
 	</div>
+	
 
 	<input id="txtDlBeCode1" type="text" th:value="${dlValStep1}" class="sr-only">
 
@@ -44,9 +43,9 @@
 
 <script id="stepCardTemplate" type="text/html">
 {{#.}}
-<div class="custom-control custom-checkbox dl_dealMain col-4 border" data-code="{{code}}" data-step="{{STEP}}">
-	<input type="checkbox" class="custom-control-input" id="chkDealMain_{{code}}" data-cdnm="{{cdnm}}" data-code="{{code}}" data-step="{{STEP}}">
-	<label class="custom-control-label" for="chkDealMain_{{code}}">{{cdnm}}</label>
-</div>
+<button type="button" class="btn btn-success btnChkbox" id="btnDealMain_{{code}}">
+<input type="checkbox" class="chkChkbox chkBtnDealItem" id="chk_btnDealMain_{{code}}" data-cdnm="{{cdnm}}" data-code="{{code}}" data-step="{{STEP}}">&nbsp;{{cdnm}}
+</button>&nbsp;
 {{/.}}
 </script>
+
