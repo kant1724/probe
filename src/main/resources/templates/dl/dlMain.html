@@ -13,19 +13,21 @@
 	    <div class="col dlNavDivCol" data-step="6"><i class="fal fa-pen-square"></i><br><span>의견</span></div>
 	  </div>
 	</div>
-
 <div class="jumbotron">
-  <p class="lead" id="lblJumboMain">조건입력.</p>
+  <p class="lead" id="lblJumboMain"></p>
 </div>
+
 	<div class="container">
-		<div class="row" id="divDealMain" name="divDealMain">
+		<div class="row form-check" id="divDealMain" name="divDealMain">
 			Loading...
 		</div>
 	</div>
-	
+<button type="button" class="btn blue-gradient btn-block" id="btnOkNext">다음</button>
+	<!--
 	<div class="fixed-bottom">
-		<button type="button" class="btn btn-outline-primary btn-block" id="btnOkNext">다음</button>
+		<button type="button" class="btn blue-gradient btn-block" id="btnOkNext">다음</button>
 	</div>
+	  -->
 	
 
 	<input id="txtDlBeCode1" type="text" th:value="${dlValStep1}" class="sr-only">
@@ -41,11 +43,21 @@
 <script id="stepCard_3Y_Template" type="text/html">
 </script>
 
-<script id="stepCardTemplate" type="text/html">
+<script id="stepCardTemplate1" type="text/html">
 {{#.}}
 <button type="button" class="btn btn-success btnChkbox" id="btnDealMain_{{code}}">
 <input type="checkbox" class="chkChkbox chkBtnDealItem" id="chk_btnDealMain_{{code}}" data-cdnm="{{cdnm}}" data-code="{{code}}" data-step="{{STEP}}">&nbsp;{{cdnm}}
 </button>&nbsp;
 {{/.}}
 </script>
+
+<script id="stepCardTemplate" type="text/html">
+{{#.}}
+<button type="button" class="btn aqua-gradient btnChk111box btn-rounded waves-effect" >
+    <input type="checkbox" class="form-check-input chkChkbox chkBtnDealItem" id="chk_btnDealMain_{{code}}" data-cdnm="{{cdnm}}" data-code="{{code}}" data-step="{{STEP}}">
+    <label class="form-check-label" for="chk_btnDealMain_{{code}}">{{cdnm}}</label>
+</button>
+{{/.}}
+</script>
+
 

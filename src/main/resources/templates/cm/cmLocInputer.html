@@ -15,7 +15,7 @@
 		</nav>
 		
 		<div class="container">
-			<div class="row" id="divSelButtons" name="divSelButtons">
+			<div class="row form-check" id="divSelButtons" name="divSelButtons">
 			Loading...
 			</div>
 		</div>
@@ -27,10 +27,20 @@
     </div>
 </div>
 
-<script id="locButtonTemplate" type="text/html">
+<script id="locButtonTemplate1" type="text/html">
 {{#.}}
 <button type="button" class="btn btn-success btnChkbox" data-code="{{CODE}}" data-depth="{{DEPTH}}">
 <input type="checkbox" class="chkChkbox" id="chkLocInputEach_{{CODE}}" data-code="{{CODE}}" data-cdnm="{{CODE_NM}}"> {{CODE_NM}}
 </button>&nbsp;
+{{/.}}
+</script>
+
+
+<script id="locButtonTemplate" type="text/html">
+{{#.}}
+<button type="button" class="btn btn-outline-default btn-rounded waves-effect btnChkbox" data-code="{{CODE}}" data-depth="{{DEPTH}}">
+	<input type="checkbox" class="form-check-input chkChkbox" id="chkLocInputEach_{{CODE}}" data-code="{{CODE}}" data-cdnm="{{CODE_NM}}">
+    <label class="form-check-label" for="chk_chkLocInputEach_{{CODE}}">{{CODE_NM}}</label>
+</button>
 {{/.}}
 </script>
