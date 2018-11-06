@@ -4,4 +4,30 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.probe.partner.PartnerMainDao">
+	<insert id="insertPartnerInfo">
+      INSERT INTO tb_ptinfo 
+      	( 
+      	  IRS_NO
+      	, VENDOR_NAME
+      	, CEO_NAME
+      	, TEL_NO1
+      	, TEL_NO2
+      	, ADDRESS
+      	, APPLICANT_TYPE
+      	, APPLICANT_NAME
+      	, APPLICANT_TEL_NO
+      	, AREA_CODE
+      	) VALUES (
+      	  #{irsNo}
+      	, #{vendorName}
+      	, #{ceoName}
+      	, #{telNo1}
+      	, ''
+      	, #{address}
+      	, ''
+      	, #{applicantName}
+      	, #{applicantTelNo}
+      	, #{areaCode}
+      	)
+    </insert>
 </mapper>

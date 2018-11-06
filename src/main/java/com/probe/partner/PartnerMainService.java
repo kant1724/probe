@@ -9,9 +9,6 @@ public class PartnerMainService {
 	PartnerMainDao partnerMainDao;
 	
 	public void insertPartnerInfo(PartnerMainVo partnerMainVo) {
-		
-		
-		
+		partnerMainDao.insertPartnerInfo(partnerMainVo);
 	}
-	
 }
