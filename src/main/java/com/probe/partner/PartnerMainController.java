@@ -25,26 +25,11 @@ public class PartnerMainController {
 		return "partner/partnerMain";
 	}
 	
-	@RequestMapping(value = "/partnerStepOne", method = RequestMethod.GET)
+	@RequestMapping(value = "/partnerStep", method = RequestMethod.GET)
 	public String partnerStepOne(@RequestParam("name") String name, Model model) {
 		model.addAttribute("name", name);
 	
-		return "partner/partnerStepOne";
-	}
-	
-	@RequestMapping("/partnerStepTwo")
-	public String partnerStepTwo(Model model) {
-		return "partner/partnerStepTwo";
-	}
-	
-	@RequestMapping("/partnerStepThree")
-	public String partnerStepThree(Model model) {
-		return "partner/partnerStepThree";
-	}
-	
-	@RequestMapping("/partnerStepFour")
-	public String partnerStepFour(Model model) {
-		return "partner/partnerStepFour";
+		return "partner/partnerStep";
 	}
 	
 	@RequestMapping("/registerPartnerInfo")
