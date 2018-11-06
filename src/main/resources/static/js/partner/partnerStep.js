@@ -20,13 +20,15 @@ $(document).ready(function() {
 			$('#stepFour').css('font-weight', '700');
 		}
 	});
-	
 	$("#registerPartner").click(function() {
 		registerPartner();
 	});
 	$(".goNext").click(function() {
 		goNext();
-	});	
+	});
+	$('#complete').click(function() {
+		complete();
+	});
 	$("#select").click(function() {		
 		$("#select_div").css('display', 'none');
 		currentDepth = 0;
@@ -41,13 +43,16 @@ $(document).ready(function() {
 	$('#content').fadeIn(500);
 });
 
-function registerPartner() {	
-	var irsNo = "";
+function complete() {	
+	var trList = $('#location_selected_table').children();
+	var area = '';
+	for (var i = 0; i < trList.length; ++i) {
+		area += $(trList[i]).find('.selected-area-value').val();
+	}
 	var option = {};
-	option.url = '/registerPartnerInfo';
-	option.data = {"irsNo" : irsNo};
+	option.url = '/completeRegistration';
+	option.data = {"area" : area};
 	gf_ajax(option);
-	
 }
 
 function goNext() {	
@@ -67,7 +72,7 @@ function setLocation() {
 	locationObj.empty();
 	if (currentDepth < 3) {
 		for (var i = 0; i < codeNmArr.length; ++i) {
-			var loc = '<button id="' + codeArr[i] + '" style="font-size: 11px; margin: 5px;" type="button" class="btn btn-primary loc1">' + codeNmArr[i] + '</button>'
+			var loc = '<button id="' + codeArr[i] + '" style="font-size: 11px; margin: 5px;" type="button" class="btn btn-primary loc">' + codeNmArr[i] + '</button>'
 			locationObj.append(loc);
 		}
 	} else {
@@ -76,7 +81,7 @@ function setLocation() {
 			locationObj.append(loc);
 		}
 	}
-	$(".btn.btn-primary.loc1").click(function() {
+	$(".btn.btn-primary.loc").click(function() {
 		if (currentDepth < 3) {
 			var grCode = $(this).prop('id');
 			if (currentDepth == 1) {
@@ -100,14 +105,19 @@ function setLocation() {
 function addAddress() {
 	var total = 0;	
 	var checkboxObj = $('.checkbox').children();
+	var area = '';
 	for (var i = 0; i < checkboxObj.length; ++i) {
 		if ($(checkboxObj[i]).is(":checked")) {
 			total += 1;
+			area += $(checkboxObj[i]).prop('id') + ";";
 		}
 	}
-	var click_trash_id = 'click_trash_' + $('#location_selected_table').children().length; 
+	var click_trash_id = 'click_trash_' + $('#location_selected_table').children().length;
+	var selected_area_id = 'selected_area_' + $('#location_selected_table').children().length;
 	var tbody = '<tr><td>' + currentSi + '</td><td>' + currentGu + '</td><td>' + total + '건</td>';
-		tbody += '<td class="delete-location"><i id="' + click_trash_id + '" class="fal fa-trash-alt"></i></td></tr>';
+		tbody += '<td class="delete-location"><i id="' + click_trash_id + '" class="fal fa-trash-alt"></i></td>'
+		tbody += '<input class="selected-area-value" id="' + selected_area_id + '" type="hidden" value="' + area + '"></tr>';
+	
 	$('#location_selected_table').append(tbody);
 	$('#' + click_trash_id).click(function() {
 		$(this).parent().parent().remove();
