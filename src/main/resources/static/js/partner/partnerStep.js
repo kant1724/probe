@@ -29,6 +29,16 @@ $(document).ready(function() {
 	$('#complete').click(function() {
 		complete();
 	});
+	
+	$("#back").click(function() {
+		var grCode = '';
+		if (currentDepth == 3) {
+			grCode = siCode;
+		}
+		currentDepth -= 2; 
+		selectAddress(grCode);
+	});
+
 	$("#select").click(function() {		
 		$("#select_div").css('display', 'none');
 		currentDepth = 0;
@@ -79,6 +89,8 @@ var currentDepth = 0;
 var currentSi = '';
 var currentGu = '';
 var currentDong = '';
+var siCode = '';
+var guCode = '';
 var codeArr = [];
 var codeNmArr = [];
 
@@ -100,8 +112,10 @@ function setLocation() {
 			var grCode = $(this).prop('id');
 			if (currentDepth == 1) {
 				currentSi = $(this).text();
+				siCode = grCode; 
 			} else if (currentDepth == 2) {
 				currentGu = $(this).text();
+				guCode = grCode;
 			}
 			selectAddress(grCode);
 		}
@@ -113,6 +127,8 @@ function setLocation() {
 	}
 	if (currentDepth == 3) {
 		$("#select_div").css('display', 'block');
+	} else {
+		$("#select_div").css('display', 'none');
 	}
 }
 
