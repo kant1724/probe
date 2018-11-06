@@ -6,6 +6,6 @@ $(document).ready(function() {
 });
 
 function goApply() {
-	var url = '/partnerStep' + '?name=1'
+	var url = '/partnerStep';
 	goPage(url);
 }

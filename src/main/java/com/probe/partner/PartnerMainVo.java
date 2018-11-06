@@ -10,6 +10,10 @@ public class PartnerMainVo {
 	String applicantTelNo;
 	String areaCode;
 	
+	public PartnerMainVo() {
+		super();
+	}
+	
 	public PartnerMainVo(String irsNo, String vendorName, String ceoName, String telNo1, String address,
 			String applicantName, String applicantTelNo, String areaCode) {
 		super();

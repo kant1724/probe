@@ -61,6 +61,11 @@ function complete() {
 	option.url = '/completeRegistration';
 	option.data = {"areaCode" : areaCode, "irsNo" : irsNo, "vendorName" : vendorName, "ceoName" : ceoName,
 				   "telNo1" : telNo1, "address" : address, "applicantName" : applicantName, "applicantTelNo" : applicantTelNo};
+	option.success = function(data, status, xhr) {
+		var url = '/partnerStepEnd'
+		goPage(url);
+	}
+	
 	gf_ajax(option);
 }
 

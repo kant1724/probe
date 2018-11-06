@@ -1,5 +1,7 @@
 package com.probe.partner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class PartnerMainController {
@@ -21,14 +23,18 @@ public class PartnerMainController {
 	}
 	
 	@RequestMapping(value = "/partnerStep", method = RequestMethod.GET)
-	public String partnerStepOne(@RequestParam("name") String name, Model model) {
-		model.addAttribute("name", name);
-	
+	public String partnerStepOne(Model model) {
 		return "partner/partnerStep";
 	}
 	
-	@RequestMapping("/completeRegistration")
-	public String completeRegistration(@RequestBody Map<String,Object> body) {
+	@RequestMapping(value = "/partnerStepEnd", method = RequestMethod.GET)
+	public String partnerStepEnd(Model model) {
+		return "partner/partnerStepEnd";
+	}
+	
+	@RequestMapping(value = "/completeRegistration", method = RequestMethod.POST)
+	@ResponseBody
+	public List<PartnerMainVo> completeRegistration(@RequestBody Map<String,Object> body, Model model) {
 		String irsNo = body.get("irsNo").toString();
 		String vendorName = body.get("vendorName").toString();
 		String ceoName = body.get("ceoName").toString();
@@ -39,9 +45,11 @@ public class PartnerMainController {
 		String areaCode = body.get("areaCode").toString();
 		
 		PartnerMainVo partnerMainVo = new PartnerMainVo(irsNo, vendorName, ceoName, telNo1, address, applicantName, applicantTelNo, areaCode);
-		
 		partnerMainService.insertPartnerInfo(partnerMainVo);
 		
-		return "partner/partnerStep";
+		List<PartnerMainVo> retList = new ArrayList<PartnerMainVo>();
+		retList.add(new PartnerMainVo());
+		
+		return retList;
 	}
 }
