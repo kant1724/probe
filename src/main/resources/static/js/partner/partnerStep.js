@@ -45,13 +45,22 @@ $(document).ready(function() {
 
 function complete() {	
 	var trList = $('#location_selected_table').children();
-	var area = '';
+	var areaCode = '';
+	var irsNo = $('#irsNo').val();
+	var vendorName = $('#vendorName').val();
+	var ceoName = $('#ceoName').val();
+	var telNo1 = $('#telNo1').val();
+	var address = $('#address').val();
+	var applicantName = $('#applicantName').val();
+	var applicantTelNo = $('#applicantTelNo').val();
+	
 	for (var i = 0; i < trList.length; ++i) {
-		area += $(trList[i]).find('.selected-area-value').val();
+		areaCode += $(trList[i]).find('.selected-area-value').val();
 	}
 	var option = {};
 	option.url = '/completeRegistration';
-	option.data = {"area" : area};
+	option.data = {"areaCode" : areaCode, "irsNo" : irsNo, "vendorName" : vendorName, "ceoName" : ceoName,
+				   "telNo1" : telNo1, "address" : address, "applicantName" : applicantName, "applicantTelNo" : applicantTelNo};
 	gf_ajax(option);
 }
 

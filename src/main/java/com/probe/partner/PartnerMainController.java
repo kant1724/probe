@@ -30,8 +30,18 @@ public class PartnerMainController {
 	@RequestMapping("/completeRegistration")
 	public String completeRegistration(@RequestBody Map<String,Object> body) {
 		String irsNo = body.get("irsNo").toString();
+		String vendorName = body.get("vendorName").toString();
+		String ceoName = body.get("ceoName").toString();
+		String telNo1 = body.get("telNo1").toString();
+		String address = body.get("address").toString();
+		String applicantName = body.get("applicantName").toString();
+		String applicantTelNo = body.get("applicantTelNo").toString();
+		String areaCode = body.get("areaCode").toString();
+		
+		PartnerMainVo partnerMainVo = new PartnerMainVo(irsNo, vendorName, ceoName, telNo1, address, applicantName, applicantTelNo, areaCode);
+		
+		partnerMainService.insertPartnerInfo(partnerMainVo);
 		
 		return "partner/partnerStep";
 	}
-
 }
