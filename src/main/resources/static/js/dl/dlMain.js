@@ -39,8 +39,15 @@ function fn_goStep(pStep) {
 	if ( !fn_canIgoToStep(pStep) ) return;
 	fn_onStep(pStep)
 
-	$(".dlNavDivCol").removeClass("dlNavDivColActive");
-	$(".dlNavDivCol[data-step^='" +pStep +"']").addClass("dlNavDivColActive"); 
+	//$(".dlNavDivCol").removeClass("dlNavDivColActive");
+	//$(".dlNavDivCol[data-step^='" +pStep +"']").addClass("dlNavDivColActive"); 
+	
+
+	$(".dlNavDivCol").removeClass("z-depth-5").addClass("z-depth-1");
+	$(".dlNavDivCol[data-step^='" +pStep +"']").addClass("z-depth-5"); 
+	
+	
+	
 }
 
 // 스텝 종료 세팅
@@ -63,8 +70,12 @@ function fn_onStep(pStep) {
 		var vResult = Mustache.render($("#stepCardTemplate").html(), vData);
 		$("#divDealMain").html(vResult);
 
-		if ( pStep == "1" ) gf_btnChkboxNoChk($(".chkChkbox")); // 체크박스 없다.
-		gf_btnChkboxEvent($(".btnChkbox"), $(".chkChkbox"), function(obj) { fn_onClickDealMain(obj); });
+		//if ( pStep == "1" ) gf_btnChkboxNoChk($(".chkChkbox")); // 체크박스 없다.
+		//gf_btnChkboxEvent($(".btnChkbox"), $(".chkChkbox"), function(obj) { fn_onClickDealMain(obj); });
+		
+		$(".chkBtnDealItem").off("click").on("click", function () {
+			fn_onClickDealMain(this);
+		} );
 
 	} else if ( pStep == "4" ) {
 		fn_step4Draw();

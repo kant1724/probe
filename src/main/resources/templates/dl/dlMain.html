@@ -5,24 +5,26 @@
 <div class="container">
 	<div class="dlNavDiv">
 	  <div class="row dlNavRow">
-	    <div class="col dlNavDivCol" data-step="1"><i class="fal fa-clipboard-list"></i><br><span>구분</span></div><i class="fal fa-angle-right"></i>
-	    <div class="col dlNavDivCol" data-step="2"><i class="fal fa-anchor"></i><br><span>방식</span></div><i class="fal fa-angle-right"></i>
-	    <div class="col dlNavDivCol" data-step="3"><i class="fal fa-building"></i><br><span>물건</span></div><i class="fal fa-angle-right"></i>
-	    <div class="col dlNavDivCol" data-step="4"><i class="fal fa-map-marker-check"></i><br><span>지역</span></div><i class="fal fa-angle-right"></i>
-	    <div class="col dlNavDivCol" data-step="5"><i class="fal fa-money-bill-wave"></i><br><span>금액</span></div><i class="fal fa-angle-right"></i>
-	    <div class="col dlNavDivCol" data-step="6"><i class="fal fa-pen-square"></i><br><span>의견</span></div>
+	    <div class="col dlNavDivCol z-depth-1" data-step="1"><i class="fal fa-clipboard-list"></i><br><span>구분</span></div><i class="fal fa-angle-right"></i>
+	    <div class="col dlNavDivCol z-depth-1" data-step="2"><i class="fal fa-anchor"></i><br><span>방식</span></div><i class="fal fa-angle-right"></i>
+	    <div class="col dlNavDivCol z-depth-1" data-step="3"><i class="fal fa-building"></i><br><span>물건</span></div><i class="fal fa-angle-right"></i>
+	    <div class="col dlNavDivCol z-depth-1" data-step="4"><i class="fal fa-map-marker-check"></i><br><span>지역</span></div><i class="fal fa-angle-right"></i>
+	    <div class="col dlNavDivCol z-depth-1" data-step="5"><i class="fal fa-money-bill-wave"></i><br><span>금액</span></div><i class="fal fa-angle-right"></i>
+	    <div class="col dlNavDivCol z-depth-1" data-step="6"><i class="fal fa-pen-square"></i><br><span>의견</span></div>
 	  </div>
 	</div>
-<div class="jumbotron">
-  <p class="lead" id="lblJumboMain"></p>
-</div>
+		<br>
+	<div class="jumbotron heavy-rain-gradient">
+	  <p class="lead" id="lblJumboMain"></p>
+	</div>
 
 	<div class="container">
-		<div class="row form-check" id="divDealMain" name="divDealMain">
+		<div class="row jumbotron" id="divDealMain" name="divDealMain">
 			Loading...
 		</div>
 	</div>
-<button type="button" class="btn blue-gradient btn-block" id="btnOkNext">다음</button>
+	
+	<button type="button" class="btn blue-gradient btn-block" id="btnOkNext">다음</button>
 	<!--
 	<div class="fixed-bottom">
 		<button type="button" class="btn blue-gradient btn-block" id="btnOkNext">다음</button>
@@ -34,30 +36,11 @@
 
 </div>
 
-<script id="stepCard_1N_Template" type="text/html">
-</script>
-<script id="stepCard_1Y_Template" type="text/html">
-</script>
-<script id="stepCard_3N_Template" type="text/html">
-</script>
-<script id="stepCard_3Y_Template" type="text/html">
-</script>
-
-<script id="stepCardTemplate1" type="text/html">
-{{#.}}
-<button type="button" class="btn btn-success btnChkbox" id="btnDealMain_{{code}}">
-<input type="checkbox" class="chkChkbox chkBtnDealItem" id="chk_btnDealMain_{{code}}" data-cdnm="{{cdnm}}" data-code="{{code}}" data-step="{{STEP}}">&nbsp;{{cdnm}}
-</button>&nbsp;
-{{/.}}
-</script>
-
 <script id="stepCardTemplate" type="text/html">
 {{#.}}
-<button type="button" class="btn aqua-gradient btnChk111box btn-rounded waves-effect" >
-    <input type="checkbox" class="form-check-input chkChkbox chkBtnDealItem" id="chk_btnDealMain_{{code}}" data-cdnm="{{cdnm}}" data-code="{{code}}" data-step="{{STEP}}">
+<button type="button" class="btn aqua-gradient btn-rounded waves-effect pb-btnSelector" for="chk_btnDealMain_{{code}}">
+    <input type="checkbox" class="form-check-input chkBtnDealItem" id="chk_btnDealMain_{{code}}" data-cdnm="{{cdnm}}" data-code="{{code}}" data-step="{{STEP}}">
     <label class="form-check-label" for="chk_btnDealMain_{{code}}">{{cdnm}}</label>
 </button>
 {{/.}}
 </script>
-
-
