@@ -98,7 +98,7 @@ function setLocation() {
 	locationObj.empty();
 	if (currentDepth < 3) {
 		for (var i = 0; i < codeNmArr.length; ++i) {
-			var loc = '<button id="' + codeArr[i] + '" style="font-size: 11px; margin: 5px;" type="button" class="btn btn-primary loc">' + codeNmArr[i] + '</button>'
+			var loc = '<button id="' + codeArr[i] + '" style="font-size: 11px; margin: 5px; padding: 10px;" type="button" class="btn btn-primary loc">' + codeNmArr[i] + '</button>'
 			locationObj.append(loc);
 		}
 	} else {
