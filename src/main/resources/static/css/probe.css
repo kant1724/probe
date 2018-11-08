@@ -13,6 +13,16 @@ body {
 
 .navbar-light{ background-color: #e74c3c; }
 
+.pb-btnSelector {
+	 padding: .4rem 1rem!important;
+     margin: .2rem;
+}
 
+.form-check-input[type=checkbox]:checked+label:before, label.btn input[type=checkbox]:checked+label:before {
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+}
 
-
+.form-check-input[type=checkbox]+label:before, .form-check-input[type=checkbox]:not(.filled-in)+label:after, label.btn input[type=checkbox]+label:before, label.btn input[type=checkbox]:not(.filled-in)+label:after {
+    border: 2px solid #cccccc;
+}

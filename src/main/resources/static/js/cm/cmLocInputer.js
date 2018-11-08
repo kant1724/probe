@@ -37,11 +37,15 @@ function fn_btnLocClick(obj) {
 		fn_setLocInputer(vGrCode);
 
 	} else if ( vDepth == 3 ) {
-		fn_getDongCheckList();
+		fn_getDongCheckList(obj);
 	}
 }
 
-function fn_getDongCheckList() {
+function fn_getDongCheckList(obj) {
+	if ( $(obj).prop("id") == "chkLocInputEach_ALL" ) {
+		var vTF = $(obj).prop("checked");
+		$("input[id^='chkLocInputEach_']").prop("checked", vTF);
+	}
 
 	var aJsonArray = new Array();
 
@@ -125,13 +129,16 @@ function fn_setLocInputerCallback(data, status, xhr) {
 
 	var vResult = Mustache.render($("#locButtonTemplate").html(), data);
 	$("#divSelButtons").html(vResult);
+	
 	//$(".btnLocSel").off("click").on("click", function() { fn_btnLocClick(this); } );
 	
-	if ( data[0].DEPTH == "3" ) $("#chkLocInputEach_ALL").addClass("chkChkboxAll");
-	
+	//if ( data[0].DEPTH == "3" ) $("#chkLocInputEach_ALL").addClass("chkChkboxAll");
 
-	if ( data[0].DEPTH == "1" || data[0].DEPTH == "2" ) gf_btnChkboxNoChk($(".chkChkbox")); // 체크박스 없다.
-	gf_btnChkboxEvent($(".btnChkbox"), $(".chkChkbox"), function(obj) { fn_btnLocClick(obj); });
+	//if ( data[0].DEPTH == "1" || data[0].DEPTH == "2" ) gf_btnChkboxNoChk($(".chkChkbox")); // 체크박스 없다.
 	
+	$(".chkLocInputEach").off("click").on("click", function () {
+		fn_btnLocClick(this);
+	} );
+
 
 }

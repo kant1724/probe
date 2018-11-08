@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+
+  <path d="M100 125 L 300 75 L 500 125 V 400 H 100 V 125 Z" 
+  fill="white"
+  stroke="currentColor"
+  stroke-width="30"/>
+
+  <path d="M100 400          H 500 V 500 H 100 V 400 Z" 
+  fill="white"
+  stroke="currentColor"
+  stroke-width="30"
+   />
+   
+  <path d="M100 200          H 150 V 300 H 100 Z" 
+  fill="currentColor"
+  stroke="currentColor"
+  stroke-width="10"
+   />
+
+  <path d="M275 200          H 325 V 300 H 275 Z" 
+  fill="currentColor"
+  stroke="currentColor"
+  stroke-width="10"
+   />
+   
+  <path d="M450 200          H 500 V 300 H 450 Z" 
+  fill="currentColor"
+  stroke="currentColor"
+  stroke-width="10"
+   />
+   
+</svg>

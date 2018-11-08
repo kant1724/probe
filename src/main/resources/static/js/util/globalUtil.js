@@ -142,15 +142,17 @@ function gf_btnChkboxEvent(pButtonSelector, pCheckboxSelector, pOnclick) {
 	} );
 
 	pCheckboxSelector.off("click").on("click", function(e) {
-		e.stopPropagation(); // parent인 pButtonSelector의 click이 발동되지 않도록.
+		//e.stopPropagation(); // parent인 pButtonSelector의 click이 발동되지 않도록.
 		gf_btnChkCheckClick(this);
-		var obj = $(this).parent(".btnChkbox");
+		var obj = $(this).parent(".pb-btnSelector");
 		pOnclick(obj);
 	});  // 체크박스
 }
 
 function gf_btnChkboxNoChk(pCheckboxSelector) {
 	pCheckboxSelector.hide();
+	//$(".form-check-label").
+	//padding-left: 0px;
 }
 
 function gf_btnChkCheckClick(obj) {
