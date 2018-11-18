@@ -13,27 +13,24 @@
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb" id="navSelLoc" name="navSelLoc"></ol>
 		</nav>
-		
 		<div class="container">
 			<div class="row" id="divSelButtons" name="divSelButtons">
 				Loading...
 			</div>
 		</div>
-			
 	</div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" id="btnLocConfirm">확인</button>
-      <button type="button" class="btn btn-primary" data-dismiss="modal">닫기</button>
+      <button type="button" class="btn default-color-dark waves-effect" id="btnLocConfirm">확인</button>
+      <button type="button" class="btn default-color-dark waves-effect" data-dismiss="modal">닫기</button>
     </div>
 </div>
 
 <script id="locButtonTemplate" type="text/html">
 {{#.}}
-<button type="button" class="btn aqua-gradient btn-rounded waves-effect pb-btnSelector" for="chk_chkLocInputEach_{{CODE}}" data-code="{{CODE}}" data-cdnm="{{CODE_NM}}" data-depth="{{DEPTH}}">
+<button type="button" class="btn default-color waves-effect pb-btnSelector" for="chk_chkLocInputEach_{{CODE}}" data-code="{{CODE}}" data-cdnm="{{CODE_NM}}" data-depth="{{DEPTH}}">
 	<input type="checkbox" class="form-check-input chkLocInputEach" id="chkLocInputEach_{{CODE}}" data-code="{{CODE}}" data-cdnm="{{CODE_NM}}" data-depth="{{DEPTH}}">
     <label class="form-check-label" for="chkLocInputEach_{{CODE}}">{{CODE_NM}}</label>
 </button>
 {{/.}}
 </script>
-

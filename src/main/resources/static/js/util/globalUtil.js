@@ -149,12 +149,6 @@ function gf_btnChkboxEvent(pButtonSelector, pCheckboxSelector, pOnclick) {
 	});  // 체크박스
 }
 
-function gf_btnChkboxNoChk(pCheckboxSelector) {
-	pCheckboxSelector.hide();
-	//$(".form-check-label").
-	//padding-left: 0px;
-}
-
 function gf_btnChkCheckClick(obj) {
 	if ( $(obj).hasClass("chkChkboxAll") ) {
 		$(".chkChkbox").prop("checked", $(obj).prop("checked"));
@@ -171,3 +165,9 @@ function gf_btnChkButtonClick(obj) {
 
 
 
+
+
+// ks20181118
+function gf_btnChkboxNoChk(pCheckboxSelector) {
+	$(pCheckboxSelector).addClass("pb-btnSelector-unChk");
+}

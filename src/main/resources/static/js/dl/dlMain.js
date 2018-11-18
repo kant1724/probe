@@ -34,20 +34,15 @@ function fn_setStep(pStep) {
 
 // 스텝에서 빠져나갈수 있으면 다음 스텝 세팅
 function fn_goStep(pStep) {
+	if ( !fn_canIgoToStep(pStep) ) return; // 다음 스템 가도되는지 체크
+	fn_outStep(); // 스텝 빠져나가면서 저장
 	if ( !fn_canIgoToStep(pStep) ) return;
-	fn_outStep();
-	if ( !fn_canIgoToStep(pStep) ) return;
-	fn_onStep(pStep)
+	fn_onStep(pStep); // 스텝 들어가면서 화면 그리기
 
 	//$(".dlNavDivCol").removeClass("dlNavDivColActive");
-	//$(".dlNavDivCol[data-step^='" +pStep +"']").addClass("dlNavDivColActive"); 
-	
-
+	//$(".dlNavDivCol[data-step^='" +pStep +"']").addClass("dlNavDivColActive");
 	$(".dlNavDivCol").removeClass("z-depth-5").addClass("z-depth-1");
 	$(".dlNavDivCol[data-step^='" +pStep +"']").addClass("z-depth-5"); 
-	
-	
-	
 }
 
 // 스텝 종료 세팅
@@ -57,13 +52,11 @@ function fn_outStep() {
 	fn_makeMents(); // 점보트론
 }
 
-
-
 // 스텝 진입 세팅
 function fn_onStep(pStep) {
 	pStep += "";
 	fn_setStep(pStep);
-	$("#tabDealStep" + pStep).tab("show");
+	//TODO 상관없는건가? 그럼 지워용 $("#tabDealStep" + pStep).tab("show");
 
 	if ( pStep == "1" || pStep == "2" || pStep == "3" ) {
 		var vData = gvStep[pStep];
@@ -72,10 +65,12 @@ function fn_onStep(pStep) {
 
 		//if ( pStep == "1" ) gf_btnChkboxNoChk($(".chkChkbox")); // 체크박스 없다.
 		//gf_btnChkboxEvent($(".btnChkbox"), $(".chkChkbox"), function(obj) { fn_onClickDealMain(obj); });
-		
+
 		$(".chkBtnDealItem").off("click").on("click", function () {
 			fn_onClickDealMain(this);
 		} );
+
+		if ( pStep == "1" ) gf_btnChkboxNoChk($(".pb-btnSelector"));
 
 	} else if ( pStep == "4" ) {
 		fn_step4Draw();
@@ -87,6 +82,7 @@ function fn_onStep(pStep) {
 			} );
 		} else { // 기등록건 그림
 		}
+
 	} else if ( pStep == "5" ) {
 		// 방식을 읽어서 금액대 입력
 		//var vData = gvDealInfo[2].data;
@@ -121,15 +117,32 @@ function fn_onStep(pStep) {
 		vResult += "  <textarea class='form-control' id='txtDealEct' aria-label='With textarea' placeholder='예) 집크기, 학군중요'></textarea>";
 
 		$("#divDealMain").html(vResult);
-	} else if ( pStep == "7" ) {
+		
+	} else if ( pStep >= 7 ) { // 검색로직
 		// 완료
 		var vResult = fn_makeMents() + gvDealInfo[6].data[0].cdnm;
-		
 		$("#divDealMain").html(vResult);
-		
+
+		var input_data = { "data" : JSON.stringify(gvDealInfo) };
+		log(JSON.stringify(gvDealInfo));
+		var option = { url:"/dlGetResult"
+			         , data: input_data
+			         , success: function (data, status, xhr) {fn_resultCallback(data, status, xhr);}
+					 };
+		gf_ajax(option);
+
 	} else {
 		
 	}
+}
+
+function fn_resultCallback(data, status, xhr) {
+	console.log(data);
+	console.log(status);
+	console.log(xhr);
+
+	var vDealKey = data.DEAL_KEY;
+	goPage("dlResult", {"dealKey":vDealKey});
 }
 
 function fn_step4Draw() {
@@ -341,15 +354,6 @@ function fn_makeMents() {
 	var vStep5 = fn_getJsonParam(5);
 	var vStep6 = fn_getJsonParam(6);
 
-	/*
-	var vMent = "나는 원해요.";
-	if ( !gf_isEmpty(vStep1) ) vMent = "나는 " + vStep1;
-	if ( !gf_isEmpty(vStep2) ) vMent = "나는 " + Josa(vStep2, "를") + " " + vStep1;
-	if ( !gf_isEmpty(vStep3) ) vMent = "나는 " + vStep2 + "로 " + Josa(vStep3, "를") + " " + vStep1;
-	if ( !gf_isEmpty(vStep4) ) vMent = "나는 " + vStep2 + "로 " + vStep4 + " 지역의 "+ Josa(vStep3, "를") + " " + vStep1;
-	if ( !gf_isEmpty(vStep5) ) vMent = "나는 " + vStep2 + "로 " + vStep4 + " 지역의 "+ vStep5 + "정도의 "+ Josa(vStep3, "를") + " " + vStep1;
-	 */
-
 	var vMent = "나는";
 	if ( !gf_isEmpty(vStep2) ) vMent += " " + vStep2 + "로";
 	if ( !gf_isEmpty(vStep4) ) vMent += " " + vStep4 + " 지역의";
@@ -360,24 +364,5 @@ function fn_makeMents() {
 	$("#lblJumboMain").text(vMent);
 
 	return vMent;
-	/*
-	 * 
-1. 9.8
-2. m,s,w
-3. a,b,d,o,t,t
-4.loc
-5.$
-6.etc
-
-나는 원해요.
-나는 구해요.
-나는 (거래방법)을 구해요.
-- 나는 (매매, 전세)를 구해요.
-나는 (매매)로 (물건)을 구해요.
-- 나는 (매매)로 (아파트, 빌라)을 구해요.
-나는 (매매)로 ()지역의 (아파트)를 구해요.
-나는 (매매)로 ()지역의 (9억)정도의 (아파트)를 구해요.
-
-*/
 }
 
