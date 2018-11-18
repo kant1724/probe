@@ -20,8 +20,8 @@ $("#cmHome").click(function(){
 	goPage("cmWelcome");
 });
 
-$("#dlStep1").click(function(){
-	goPage("dlStep1");
+$("#cmHowto").click(function(){
+	goPage("dlResult?dealKey=34");
 });
 
 $("#dlMain_9").click(function(){

@@ -134,7 +134,7 @@ function fn_setLocInputerCallback(data, status, xhr) {
 	
 	//if ( data[0].DEPTH == "3" ) $("#chkLocInputEach_ALL").addClass("chkChkboxAll");
 
-	//if ( data[0].DEPTH == "1" || data[0].DEPTH == "2" ) gf_btnChkboxNoChk($(".chkChkbox")); // 체크박스 없다.
+	if ( data[0].DEPTH == "1" || data[0].DEPTH == "2" ) gf_btnChkboxNoChk($(".pb-btnSelector")); // 체크박스 없다.
 	
 	$(".chkLocInputEach").off("click").on("click", function () {
 		fn_btnLocClick(this);

@@ -19,4 +19,71 @@
 		   AND A.GR_CODE = IFNULL(#{grCode}, '')
 		 ORDER BY A.CODE_NM
     </select>
+
+    <insert id="insDealAndGetKey" parameterType="java.util.HashMap">
+    <![CDATA[
+        INSERT INTO TB_DL001 (
+            LST_UPD_DH
+        ) VALUES (
+			DATE_FORMAT(NOW(),'%Y%m%d%H%i%S')
+        )
+    ]]>
+	    <selectKey keyProperty="id" resultType="java.lang.String">
+	        SELECT LAST_INSERT_ID()
+	    </selectKey>
+	</insert>
+    
+    
+    <update id="dlInsDL001" parameterType="java.util.HashMap">
+		UPDATE TB_DL001
+		   SET CONTEXT = #{CONTEXT}
+		     , POSITION = #{POSITION}
+		  WHERE DL_KEY = #{DL_KEY}
+	</update>
+    
+    <insert id="dlInsDL002" parameterType="java.util.List">
+		INSERT INTO TB_DL002 (
+			DL_KEY, DEAL_METH, DEAL_AMT, DEAL_AMT2
+		) VALUES
+		
+		<foreach collection="list" item="element" index="index" open="(" separator="),("  close=")">
+		#{element.DL_KEY}, #{element.DEAL_METH}, #{element.DEAL_AMT}, #{element.DEAL_AMT2} 
+		</foreach>
+	</insert>
+    
+    
+    <insert id="dlInsDL003" parameterType="java.util.List">
+		INSERT INTO TB_DL003 (
+			DL_KEY, ITEM_CD
+		) VALUES
+		
+		<foreach collection="list" item="element" index="index" open="(" separator="),("  close=")">
+		#{element.DL_KEY}, #{element.ITEM_CD} 
+		</foreach>
+	</insert>
+    
+    <insert id="dlInsDL004" parameterType="java.util.List">
+		INSERT INTO TB_DL004 (
+			DL_KEY, AREA_CODE_DONG
+		) VALUES
+		
+		<foreach collection="list" item="element" index="index" open="(" separator="),("  close=")">
+		#{element.DL_KEY}, #{element.AREA_CODE_DONG}
+		</foreach>
+	</insert>
+    
+	<select id="dlGenerate" parameterType="java.util.HashMap" statementType="CALLABLE">
+		{ call SP_LET_MAKES_DEAL( #{DL_KEY,mode=IN,jdbcType=VARCHAR}, #{DL_COUNT,mode=OUT,jdbcType=VARCHAR} ) }
+	</select>
+
+    <select id="getPartnerForDealKey" parameterType="java.lang.String" resultType="java.util.HashMap">
+		SELECT A.DL_KEY, A.PARTNER_NO, A.SORT_NUM
+		     , A.DIS_RAT, A.EXAM_AMT
+		     , B.VENDOR_NAME
+		  FROM TB_DL005 A
+		     , TB_PTINFO B
+		 WHERE A.PARTNER_NO = B.PARTNER_NO
+		   AND A.DL_KEY = #{DL_KEY}
+		 ORDER BY A.SORT_NUM
+    </select>
 </mapper>

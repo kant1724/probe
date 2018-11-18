@@ -1,0 +1,37 @@
+<meta charset="UTF-8">
+<script src="/js/dl/dlResult.js"></script>
+<link rel="stylesheet" href="/css/dl/dlMain.css">
+
+<div class="container">
+	<div id="dlResultMain" class="text-center">
+<i class="fal fa-3x fa-spin fa-spinner"></i><br>
+Loading....
+	</div>
+	<input id="dealKey" type="text" th:value="${dealKey}" class="sr-only">
+</div>
+
+<script id="dlResultTemplate" type="text/html">
+{{#.}}
+  <div class="card">
+  <div class="card-header">{{VENDOR_NAME}}</div>
+    <div class="card-body">
+      <h5 class="card-title">{{DIS_RAT}}% 할인</h5>
+      <p class="card-text">전세 (1000만원) 기준 00만원 > 00만원</p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+  </div>
+<br>
+{{/.}}
+</script>
+
+<script id="dlResultEmptyTemplate" type="text/html">
+<div class="card card-cascade">
+  <div class="view view-cascade gradient-card-header aqua-gradient">
+    <h2 class="card-header-title mb-3"><i class="fal fa-3x fa-exclamation-triangle"></i></h2>
+    <p class="card-header-subtitle mb-0">검색된 결과가 없습니다.</p>
+  </div>
+</div>
+</script>
+
+
+

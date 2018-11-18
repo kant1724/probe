@@ -14,15 +14,41 @@ body {
 .navbar-light{ background-color: #e74c3c; }
 
 .pb-btnSelector {
-	 padding: .4rem 1rem!important;
-     margin: .2rem;
+	padding: .4rem 0.7rem!important;
+	margin: .2rem;
 }
 
-.form-check-input[type=checkbox]:checked+label:before, label.btn input[type=checkbox]:checked+label:before {
+.pb-btnSelector .form-check-input[type=checkbox]+label, 
+.pb-btnSelector label.btn input[type=checkbox]+label {
+	padding-left: 25px;
+}
+
+
+.pb-btnSelector .form-check-input[type=checkbox]:checked+label:before,
+.pb-btnSelector label.btn input[type=checkbox]:checked+label:before {
     border-right: 2px solid #ffffff;
     border-bottom: 2px solid #ffffff;
+    border-top: 2px solid transparent;
+    border-left: 2px solid transparent;
 }
 
-.form-check-input[type=checkbox]+label:before, .form-check-input[type=checkbox]:not(.filled-in)+label:after, label.btn input[type=checkbox]+label:before, label.btn input[type=checkbox]:not(.filled-in)+label:after {
-    border: 2px solid #cccccc;
+.pb-btnSelector .form-check-input[type=checkbox]+label:before,
+.pb-btnSelector .form-check-input[type=checkbox]:not(.filled-in)+label:after,
+.pb-btnSelector label.btn input[type=checkbox]+label:before,
+.pb-btnSelector label.btn input[type=checkbox]:not(.filled-in)+label:after {
+    border: 2px solid #ffffff;
+}
+
+.pb-btnSelector-unChk .form-check-input[type=checkbox]:checked+label:before,
+.pb-btnSelector-unChk label.btn input[type=checkbox]:checked+label:before,
+.pb-btnSelector-unChk .form-check-input[type=checkbox]+label:before,
+.pb-btnSelector-unChk .form-check-input[type=checkbox]:not(.filled-in)+label:after,
+.pb-btnSelector-unChk label.btn input[type=checkbox]+label:before,
+.pb-btnSelector-unChk label.btn input[type=checkbox]:not(.filled-in)+label:after {
+    border: 2px solid transparent;
+}
+
+.pb-btnSelector-unChk .form-check-input[type=checkbox]+label, 
+.pb-btnSelector-unChk label.btn input[type=checkbox]+label {
+	padding-left: 0px;
 }
